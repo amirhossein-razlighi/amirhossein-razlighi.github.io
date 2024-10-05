@@ -4038,8 +4038,8 @@ button.btn--pill {
 }
 
 .s-about__content-bottom .btn--download svg {
-    height: 2rem;
-    width: 2rem;
+    height: 3rem;
+    width: 3rem;
     vertical-align: middle;
     margin-right: 1.2rem;
     -webkit-transition: all 0.3s ease-in-out;
@@ -4186,8 +4186,8 @@ button.btn--pill {
  * ------------------------------------------------------------------- */
 .s-portfolio {
     background-color: var(--color-gray-1);
-    padding-top: calc(6 * var(--space));
-    padding-bottom: var(--vspace-5);
+    padding-top: calc(2 * var(--space));
+    padding-bottom: var(--vspace-1);
 }
 
 .s-portfolio h3 {
