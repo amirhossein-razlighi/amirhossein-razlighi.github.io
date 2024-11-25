@@ -295,17 +295,6 @@
 
     }; // end ssBackToTop
 
-    document.addEventListener('DOMContentLoaded', function () {
-        const arxiv_popup = function () {
-            const button = document.getElementById('arxiv-button');
-            button.addEventListener('click', function () {
-                alert('Right now the arXiv version is being processed on the website and will be ready in less than a week. If you want to access the pre-print now, please contact me via email.');
-            });
-        };
-
-        arxiv_popup();
-    });
-
 
     /* initialize
      * ------------------------------------------------------ */
