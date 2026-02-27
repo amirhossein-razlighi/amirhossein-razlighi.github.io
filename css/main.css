@@ -1,0 +1,523 @@
+/* Timeline custom component */
+
+html, body, .container {
+  overflow: visible !important;
+}
+
+.timeline-card {
+  position: relative;
+  margin-left: 16px; }
+
+.timeline-card:before {
+  content: '';
+  display: inline-block;
+  position: absolute;
+  background-color: #fff;
+  border-radius: 100%;
+  width: 24px;
+  height: 24px;
+  top: 16px;
+  left: -12px;
+  border: 5px solid;
+  z-index: 2; }
+
+.timeline-body {
+  border-left: 2px solid #E6E9ED; }
+
+.timeline-card-primary:before {
+  border-color: var(--bs-primary); }
+
+.timeline-card-info:before {
+  border-color: var(--bs-info); }
+
+.timeline-card-secondary:before {
+  border-color: var(--bs-secondary); }
+
+.timeline-card-success:before {
+  border-color: var(--bs-teal); }
+
+html {
+  scroll-behavior: smooth; }
+
+html, body {
+  overflow-x: hidden; }
+
+.container {
+  max-width: 1140px;
+  overflow: visible !important; /* Ensure no hidden or scrolling overflow is applied */
+}
+
+.site-title {
+  font-size: 1.25rem;
+  line-height: 2.5rem; }
+
+.nav-link {
+  padding: 0;
+  font-size: 1rem;
+  line-height: 2.5rem;
+  color: inherit;
+  opacity: 0.8; }
+
+  .header-social .nav-link {
+    font-size: 2rem; /* Increase icon size */
+    color: #ffffff;  /* Set icon color to white for better contrast */
+    padding: 0.5rem;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background for better visibility */
+    border-radius: 50%; /* Make the icon background circular */
+    margin-right: 15px; /* Add space between icons */
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  
+
+  
+.nav-link:hover,
+.nav-link:focus {
+  color: inherit;
+  opacity: 1; }
+
+.nav-item + .nav-item {
+  margin-left: 1rem; }
+
+.cover {
+  height: 500px; }
+
+.cover > img {
+  -o-object-fit: cover;
+     object-fit: cover;
+  width: auto; }
+
+.progress-bar {
+  text-transform: uppercase;
+  font-size: 10px;
+  letter-spacing: 1px; }
+
+.text-small {
+  font-size: 0.85rem; }
+
+.text-teal {
+  color: var(--bs-teal); }
+
+footer a:not(.nav-link) {
+  color: inherit;
+  border-bottom: 1px dashed;
+  text-decoration: none;
+  cursor: pointer; }
+
+@media (min-width: 48em) {
+  .site-title {
+    float: left; }
+  .site-nav {
+    float: right; } }
+
+@media (max-width: 767px) {
+  /* disable animations on mobile */
+  [data-aos] {
+    opacity: 1 !important;
+    transform: translate(0) scale(1) !important; }
+  .p-5 {
+    padding: 2.5rem 2rem !important; }
+  .portfolio-section .m-5 {
+    margin: 2rem 0 1rem !important; }
+  .portfolio-reverse {
+    flex-direction: column-reverse; }
+  .portfolio-reverse .text-end {
+    text-align: start !important; } }
+
+@media print {
+  [data-aos] {
+    opacity: 1 !important;
+    transform: translate(0) scale(1) !important; }
+  body.bg-light {
+    background-color: #fff !important; }
+  .container {
+    width: auto;
+    max-width: 100%;
+    padding: 0; }
+  .cover {
+    height: 360px;
+    margin-bottom: 1.5rem; }
+  .cover > img {
+    display: none; }
+  .shadow-1-strong {
+    box-shadow: none !important; }
+  .resume-container > .my-5 {
+    margin: 0 !important; }
+  .my-5.p-5 {
+    padding: 1.5rem 0 !important; }
+  .about-section {
+    padding: 0 !important; }
+  .skills-section,
+  .work-experience-section,
+  .education-section,
+  .portfolio-section,
+  .reference-section,
+  .contact-section {
+    padding: 0 !important; }
+  .page-break {
+    padding-top: 5rem;
+    page-break-before: always; } }
+
+/* Ensure the images fit well in their columns */
+.img-fluid {
+  border-radius: 8px;
+}
+
+/* Style for project titles */
+.fw-bold {
+  font-weight: bold;
+}
+
+/* Styling for the button */
+.btn-primary {
+  background-color: #17a2b8;
+  border-color: #17a2b8;
+}
+
+.btn-primary:hover {
+  background-color: #138496;
+  border-color: #117a8b;
+}
+
+/* Add some margin between rows */
+.row.mb-4 {
+  margin-bottom: 2rem;
+}
+
+#contact {
+  background-color: #f8f9fa; /* Light background for consistency */
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+}
+
+#contact h2 {
+  font-weight: 300;
+  color: #343a40; /* Dark grey for titles */
+}
+
+#contact ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+#contact li {
+  margin-bottom: 15px;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+}
+
+#contact a {
+  color: #007bff; /* Bootstrap blue */
+  text-decoration: none;
+}
+
+#contact a:hover {
+  text-decoration: underline;
+}
+
+#contact i {
+  margin-right: 10px;
+  font-size: 1.5rem;
+  color: #6c757d; /* Light grey for icons */
+}
+
+#hobbies {
+  background-color: #f8f9fa; /* Same as contact section */
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+}
+
+#hobbies h2 {
+  font-weight: 300;
+  color: #343a40; /* Same color scheme as the rest */
+}
+
+#hobbies p {
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+}
+
+#hobbies ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+#hobbies li {
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+}
+
+#hobbies i {
+  margin-right: 10px;
+  font-size: 1.5rem;
+  color: #6c757d; /* Light grey for icons */
+}
+
+/* Sticky header */
+header#main-header {
+  position: sticky;
+  top: 0;
+  z-index: 9999; /* Ensure it stays on top of other elements */
+  background-color: #fff; /* Ensure the background color is consistent */
+  width: 100%; /* Full width of the viewport */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Optional: subtle shadow for aesthetic */
+}
+
+.site-title {
+  font-size: 1.25rem;
+  line-height: 2.5rem;
+}
+
+.nav {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.nav-item {
+  margin-left: 20px;
+}
+
+.nav-link {
+  color: #333; /* Main text color */
+  text-decoration: none;
+  padding: 10px 15px;
+  font-size: 1rem;
+  line-height: 2.5rem;
+  transition: color 0.3s ease-in-out;
+}
+
+.nav-link:hover {
+  color: #007bff; /* Bootstrap blue for hover */
+}
+
+.parent-class {
+  position: static !important; /* Ensure no parent has position: relative */
+}
+
+/* GitHub Button Styling */
+.btn-github {
+  background-color: #24292e;
+  border-color: #24292e;
+  color: #fff;
+  transition: all 0.3s ease;
+}
+
+.btn-github:hover {
+  background-color: #1e2124;
+  border-color: #1e2124;
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(36, 41, 46, 0.3);
+}
+
+.btn-github:focus,
+.btn-github:active {
+  background-color: #1e2124;
+  border-color: #1e2124;
+  color: #fff;
+  box-shadow: 0 0 0 0.2rem rgba(36, 41, 46, 0.25);
+}
+
+/* Alternative: Style existing secondary buttons when they're GitHub links */
+a[href*="github.com"].btn-secondary {
+  background-color: #24292e;
+  border-color: #24292e;
+  color: #fff;
+}
+
+a[href*="github.com"].btn-secondary:hover {
+  background-color: #1e2124;
+  border-color: #1e2124;
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(36, 41, 46, 0.3);
+}
+
+:root{
+  --btn-radius: 14px;
+  --btn-pad-y: .6rem;
+  --btn-pad-x: 1rem;
+  --btn-shadow: 0 4px 12px rgba(0,0,0,.08);
+  --btn-shadow-hover: 0 8px 20px rgba(0,0,0,.12);
+}
+
+.btn{
+  border-radius: var(--btn-radius) !important;
+  padding: var(--btn-pad-y) var(--btn-pad-x) !important;
+  font-weight: 600;
+  letter-spacing: .2px;
+  border-width: 1px;
+  box-shadow: var(--btn-shadow);
+  transition:
+    transform .15s ease,
+    box-shadow .2s ease,
+    background-color .2s ease,
+    border-color .2s ease,
+    color .2s ease;
+  will-change: transform;
+}
+
+.btn:hover{ transform: translateY(-1px); box-shadow: var(--btn-shadow-hover); }
+.btn:active{ transform: translateY(0); box-shadow: var(--btn-shadow); }
+
+.btn:focus-visible{
+  outline: none;
+  /* focus ring using your teal */
+  box-shadow: 0 0 0 4px rgba(23,162,184,.25), var(--btn-shadow-hover);
+}
+
+/* Primary (your teal, with a subtle gradient) */
+.btn-primary{
+  background: linear-gradient(180deg, #17a2b8, #1493a6);
+  border-color: #138496;
+  color: #fff;
+}
+.btn-primary:hover{
+  background: linear-gradient(180deg, #1493a6, #117f90);
+  border-color: #0f6f7e;
+}
+
+/* Secondary (soft, modern gray) — use this for arXiv / Project Page / etc. */
+.btn-secondary{
+  background: #777b83;
+  color: #111827;
+  border-color: #575a61;
+}
+.btn-secondary:hover{
+  background: #e7e9ee;
+  border-color: #575a61;
+  color: #0f172a;
+}
+
+/* Optional: outline/ghost style */
+.btn-outline{
+  background: transparent;
+  color: #111827;
+  border-color: #6b7077;
+}
+.btn-outline:hover{ background: #f3f4f6; }
+
+/* Optional: pill shape */
+.btn-pill{ border-radius: 9999px !important; }
+
+/* Optional sizes */
+.btn-sm{ padding: .45rem .8rem !important; border-radius: 12px !important; }
+.btn-lg{ padding: .8rem 1.2rem !important; border-radius: 16px !important; }
+
+/* Nice spacing for icon-leading buttons */
+.btn > i:first-child{ margin-right: .4rem; }
+
+/* Keep button colors the same after click (visited) */
+a.btn.btn-primary:link,
+a.btn.btn-primary:visited{
+  color:#fff;
+  background: linear-gradient(180deg, #17a2b8, #1493a6);
+  border-color:#138496;
+}
+
+a.btn.btn-secondary:link,
+a.btn.btn-secondary:visited{
+  color:#111827;
+  background:#f3f4f6;
+  border-color:#808185;
+}
+
+/* If using the black GitHub style, keep it consistent too */
+a.btn.btn-github:link,
+a.btn.btn-github:visited{
+  color:#fff;
+  background-color:#24292e;
+  border-color:#24292e;
+}
+
+/* Project Page — gradient accent with subtle shine */
+.btn-project{
+  position: relative;
+  overflow: hidden;
+  color:#fff !important;
+  background: linear-gradient(135deg, #17a2b8, #7c3aed); /* teal → violet */
+  border: 0;
+  box-shadow:
+    0 8px 20px rgba(124,58,237,.25),
+    0 2px 6px rgba(23,162,184,.25);
+  transition:
+    transform .15s ease,
+    box-shadow .2s ease,
+    filter .2s ease,
+    background .2s ease;
+}
+
+.btn-project:hover{
+  transform: translateY(-1px);
+  filter: saturate(1.05);
+  background: linear-gradient(135deg, #1493a6, #6d28d9);
+  box-shadow:
+    0 10px 24px rgba(124,58,237,.28),
+    0 3px 8px rgba(23,162,184,.28);
+}
+
+.btn-project:active{
+  transform: translateY(0);
+}
+
+/* Focus ring */
+.btn-project:focus-visible{
+  outline: none;
+  box-shadow:
+    0 0 0 4px rgba(124,58,237,.25),
+    0 8px 20px rgba(0,0,0,.12);
+}
+
+/* Soft “shine” sweep on hover */
+.btn-project::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.35), transparent);
+  transform: translateX(-100%);
+  transition: transform .45s ease;
+  pointer-events:none;
+}
+.btn-project:hover::after{ transform: translateX(100%); }
+
+/* Keep colors after click (visited) */
+a.btn.btn-project:link,
+a.btn.btn-project:visited{
+  color:#fff;
+  background: linear-gradient(135deg, #17a2b8, #7c3aed);
+  border:0;
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .btn-project,
+  .btn-project::after{
+    transition: none;
+  }
+}
+
+.badge-spotlight {
+  font-weight: 700;
+  box-shadow: 0 0 0 0 rgba(255,193,7,.7);
+  animation: pulseBadge 2s ease-out infinite;
+}
+@keyframes pulseBadge {
+  0%   { box-shadow: 0 0 0 0 rgba(255,193,7,.6); }
+  70%  { box-shadow: 0 0 0 10px rgba(255,193,7,0); }
+  100% { box-shadow: 0 0 0 0 rgba(255,193,7,0); }
+}
+
+.venue-highlight{
+  position:relative; padding:0 .15em;
+  font-style:italic; font-weight:600;
+}
+
+.authors { color: var(--authors-color, #373c41); font-size: .975rem; margin-bottom: .5rem; }
+.authors .me { font-weight: 700; }
