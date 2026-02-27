@@ -97,6 +97,110 @@
       .video-card-body { padding: 0.55rem 0.8rem; font-size: 0.78rem; color: #6c757d; background: #f8f9fa; border-top: 1px solid rgba(0,0,0,.06); }
       .video-responsive { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; }
       .video-responsive iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+
+      /* ── Mobile responsiveness ── */
+      @media (max-width: 767px) {
+        /* Header nav: allow wrapping and reduce size */
+        header#main-header .nav {
+          flex-wrap: wrap !important;
+          justify-content: center !important;
+          gap: 0;
+        }
+        header#main-header .nav-item {
+          margin-left: 0 !important;
+        }
+        header#main-header .nav-link {
+          font-size: 0.82rem !important;
+          line-height: 2rem !important;
+          padding: 0.15rem 0.55rem !important;
+        }
+        header#main-header .site-title {
+          font-size: 1.05rem;
+          text-align: center;
+          display: block;
+          padding-bottom: 0.25rem;
+        }
+        header#main-header .pt-4 {
+          padding-top: 0.75rem !important;
+          padding-bottom: 0.5rem;
+        }
+
+        /* Cover / hero */
+        .cover { height: auto !important; overflow: visible !important; }
+        #intro .bg-info { overflow: visible !important; }
+        #intro .bg-image { overflow: visible !important; height: auto !important; }
+        .cover .mask { position: relative !important; height: auto !important; overflow: visible !important; }
+        .cover .text-center.p-5 { padding: 2rem 1rem !important; }
+        .cover .h1 { font-size: 1.4rem !important; }
+        .cover > div > div > div.text-center > div.header-bio > div:first-child > p {
+          font-size: 0.88rem;
+        }
+        /* Avatar always visible */
+        .avatar { display: block !important; visibility: visible !important; }
+        .avatar img {
+          display: block !important;
+          visibility: visible !important;
+          opacity: 1 !important;
+          width: 150px !important;
+          height: 150px !important;
+          max-width: 150px !important;
+          object-fit: cover;
+        }
+
+        /* Social icons */
+        .header-social .nav {
+          flex-wrap: wrap !important;
+          justify-content: center !important;
+          gap: 0.3rem;
+        }
+        .header-social .nav-link {
+          font-size: 1.4rem !important;
+          padding: 0.35rem !important;
+          margin-right: 4px !important;
+        }
+
+        /* Section inner padding */
+        section.section .container-inner { padding: 2rem 0.25rem !important; }
+
+        /* Publication & project image spacing on mobile */
+        .pub-entry .col-md-4,
+        .row.mb-4 .col-md-4 { margin-bottom: 1rem; }
+
+        /* Video cards: full width on mobile */
+        .video-card { flex: 1 1 100% !important; min-width: unset !important; }
+
+        /* Timeline text */
+        .timeline-head .h5 { font-size: 0.95rem; }
+
+        /* Promotion sub-timeline */
+        .border-start.border-2 { overflow-x: hidden; }
+
+        /* Hobby / contact button groups */
+        .d-flex.flex-wrap.gap-2 { gap: 0.4rem !important; }
+
+        /* Download CV button */
+        .btn-lg { font-size: 0.9rem !important; padding: 0.55rem 1rem !important; }
+
+        /* Teaching list items */
+        #teaching ul li { font-size: 0.9rem; }
+
+        /* Badge text */
+        .proj-badges .badge { font-size: 0.68rem; }
+      }
+
+      @media (max-width: 480px) {
+        .cover .h1 { font-size: 1.15rem !important; }
+        .header-social .nav-link {
+          font-size: 1.15rem !important;
+          padding: 0.28rem !important;
+        }
+        header#main-header .nav-link {
+          font-size: 0.75rem !important;
+          padding: 0.1rem 0.45rem !important;
+        }
+        .timeline-head .h5 { font-size: 0.88rem; }
+        .timeline-head .h6 { font-size: 0.78rem; }
+      }
     </style>
 
     <noscript>
@@ -166,9 +270,9 @@
                         </ul>
                       </nav>
                     </div>
-                    <div class="d-print-none" data-aos="fade-right" data-aos-delay="700">
+                    <!-- <div class="d-print-none" data-aos="fade-right" data-aos-delay="700">
                       <a class="btn btn-outline-light btn-lg shadow-sm mt-1 me-3" href="#" target="_blank" rel="noopener">Download CV</a>
-                    </div>
+                    </div> -->
                   </div>
                 </div>
               </div>
@@ -654,7 +758,7 @@
       <div class="container">
         <div class="divider"></div>
         <p class="text-center text-muted small mb-0">
-          Based on the <a href="https://templateflip.com/templates/material-resume/" target="_blank" rel="noopener" class="text-muted">Material Resume</a> template &mdash; customized &amp; extended by <strong>AmirHossein Razlighi</strong>.
+          Based on the <a href="https://templateflip.com/templates/material-resume/" target="_blank" rel="noopener" class="text-muted">Material Resume</a> template &mdash; customized &amp; extended (for my non-commercial personal use) by <strong>AmirHossein Razlighi</strong>.
         </p>
       </div>
     </footer>
