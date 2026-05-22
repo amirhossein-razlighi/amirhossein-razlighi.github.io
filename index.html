@@ -211,7 +211,8 @@
       align-items: flex-start;
     }
     .pub-thumb { flex-shrink: 0; width: 160px; }
-    .pub-thumb img {
+    .pub-thumb img,
+    .pub-thumb video {
       width: 160px;
       height: 102px;
       object-fit: cover;
@@ -220,7 +221,8 @@
       display: block;
       transition: transform 0.2s;
     }
-    .pub-item:hover .pub-thumb img { transform: scale(1.03); }
+    .pub-item:hover .pub-thumb img,
+    .pub-item:hover .pub-thumb video { transform: scale(1.03); }
 
     .pub-content { flex: 1; min-width: 0; }
     .pub-title {
@@ -505,7 +507,7 @@
       .contact-row { justify-content: center; }
 
       .pub-entry { flex-direction: column; }
-      .pub-thumb, .pub-thumb img { width: 100%; height: 170px; }
+      .pub-thumb, .pub-thumb img, .pub-thumb video { width: 100%; height: 170px; }
 
       .project-item { flex-direction: column; }
       .project-thumb, .project-thumb img { width: 100%; height: 140px; }
@@ -623,6 +625,38 @@
       <section id="publications">
         <h2 class="section-title">Publications</h2>
         <div class="pub-list">
+
+          <!-- ── Sound Sparks Motion ────────────────────────────── -->
+          <div class="pub-item">
+            <div class="pub-entry">
+              <div class="pub-thumb">
+                <video autoplay muted loop playsinline
+                  poster="https://amirhossein-razlighi.github.io/Sound_Sparks_Motion/assets/images/teaser.jpg">
+                  <source src="https://amirhossein-razlighi.github.io/Sound_Sparks_Motion/assets/videos/rose_output.mp4" type="video/mp4">
+                </video>
+              </div>
+              <div class="pub-content">
+                <p class="pub-title">Sound Sparks Motion: Audio and Text Tuning for Video Editing</p>
+                <p class="pub-authors">
+                  <strong>AmirHossein Naghi Razlighi</strong>, Aryan Mikaeili, Ali Mahdavi-Amiri,
+                  Daniel Cohen-Or, Yiorgos Chrysanthou
+                </p>
+                <p class="pub-venue">arXiv preprint &nbsp;·&nbsp; Under review at SIGGRAPH Asia 2026</p>
+                <p class="pub-abstract">
+                  A test-time tuning framework for motion-focused video editing inside audio-visual
+                  generative models. Instead of retraining, we tune two lightweight variables — an
+                  audio latent and a text-conditioning residual — guided by vision-language model
+                  feedback. The learned controls transfer across videos, suggesting they capture
+                  reusable motion directions in the model's multimodal conditioning space.
+                </p>
+                <div class="pub-links">
+                  <a href="https://arxiv.org/abs/2605.15307" target="_blank" rel="noopener">arXiv</a>
+                  <a href="https://amirhossein-razlighi.github.io/Sound_Sparks_Motion/" target="_blank" rel="noopener">Project Page</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- ─────────────────────────────────────────────────────── -->
 
           <!-- ── Confident Splatting ─────────────────────────────── -->
           <div class="pub-item">
