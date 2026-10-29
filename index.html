@@ -1,1252 +1,585 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AmirHossein Razlighi</title>
-  <meta name="description" content="AmirHossein Razlighi — Computer Vision Researcher. 3D Vision, Generative Models, Graphics.">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AmirHossein Razlighi</title>
+<meta name="description" content="PhD student working on controllable video generation, 3D/4D representations and generative models. GrUVi Lab @ SFU and University of Cyprus.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✦</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,500;0,6..72,600;1,6..72,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#14213d; --muted:#5a6a85; --line:#dbe5f3; --card:#ffffffd9;
+  --accent:#2f5fd0; --accent-soft:#e4eefc; --warm:#5bb6e8;
+  --bg1:#e6f0fd; --bg2:#e9f7fb; --bg0:#f6f9fe;
+  --serif:'Newsreader',Georgia,serif; --sans:'Inter',system-ui,sans-serif; --mono:'JetBrains Mono',ui-monospace,monospace;
+  --w:1040px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+body{font:16px/1.65 var(--sans);color:var(--ink);background:var(--bg0);-webkit-font-smoothing:antialiased;position:relative}
+body::before{content:"";position:fixed;inset:0;z-index:-1;
+  background:radial-gradient(900px 520px at 12% -5%,var(--bg1),transparent 70%),
+             radial-gradient(800px 500px at 100% 8%,var(--bg2),transparent 65%),var(--bg0)}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline;text-underline-offset:3px}
+.wrap{max-width:var(--w);margin:0 auto;padding:0 24px}
+h1,h2,h3{font-family:var(--serif);font-weight:600;letter-spacing:-.01em;line-height:1.15}
 
-  <!-- Favicon -->
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✦</text></svg>">
+/* nav */
+nav{position:sticky;top:0;z-index:50;background:#f6f9fecc;backdrop-filter:saturate(160%) blur(14px);-webkit-backdrop-filter:saturate(160%) blur(14px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:56px;gap:16px}
+.brand{font-family:var(--serif);font-weight:600;font-size:1.08rem;color:var(--ink);display:flex;align-items:center;gap:.5rem;white-space:nowrap}
+.brand i{font-style:normal;color:var(--accent)}
+.brand:hover{text-decoration:none}
+.links{display:flex;gap:1.3rem;list-style:none;overflow-x:auto;scrollbar-width:none}
+.links::-webkit-scrollbar{display:none}
+.links a{font-size:.84rem;font-weight:500;color:var(--muted);white-space:nowrap}
+.links a:hover{color:var(--ink);text-decoration:none}
 
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+/* hero */
+.hero{display:grid;grid-template-columns:1.05fr 1fr;gap:56px;align-items:center;padding:72px 0 56px}
+.hero h1{font-size:clamp(2.4rem,5.2vw,3.5rem);margin-bottom:20px}
+.hero p{color:#34435f;margin-bottom:14px;max-width:34em}
+.hero p.lead{font-size:1.04rem}
+.btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+.btn{display:inline-flex;align-items:center;gap:8px;font-weight:500;font-size:.9rem;padding:9px 16px;border-radius:9px;border:1.5px solid var(--ink);color:var(--ink);background:#fff;box-shadow:2px 2px 0 var(--ink);transition:transform .12s,box-shadow .12s}
+.btn:hover{text-decoration:none;transform:translate(1px,1px);box-shadow:1px 1px 0 var(--ink)}
+.btn.primary{background:#bcd4f7}
+.lab{background:var(--card);border:1.5px solid var(--ink);border-radius:14px;box-shadow:6px 6px 0 #bcd4f7;overflow:hidden}
+.lab-bar{display:flex;justify-content:space-between;align-items:center;padding:9px 14px;border-bottom:1.5px solid var(--ink);font:500 .74rem var(--mono);color:var(--muted)}
+.lab canvas{display:block;width:100%;aspect-ratio:1/.82;background:linear-gradient(180deg,#fff,#f3f8ff)}
+.lab-ctl{display:flex;align-items:center;gap:12px;padding:10px 14px;border-top:1.5px solid var(--ink);font:500 .76rem var(--mono)}
+.lab-ctl input{flex:1;accent-color:var(--accent)}
+.shuf{display:inline-flex;align-items:center;gap:6px;font:500 .78rem var(--mono);border:1.5px solid var(--ink);background:var(--ink);color:#fff;border-radius:99px;padding:5px 14px;cursor:pointer;transition:background .12s}
+.shuf:hover{background:var(--accent)}
+.lab-cap{padding:0 14px 12px;font-size:.78rem;color:var(--muted)}
 
-  <!-- Icons -->
-  <link href="css/font-awesome/css/all.min.css" rel="stylesheet">
+/* sections */
+section{padding:56px 0}
+h2{font-size:2rem;margin-bottom:8px}
+.sub{color:var(--muted);margin-bottom:28px}
+.about{display:grid;grid-template-columns:200px 1fr;gap:36px;align-items:start}
+.about img{width:200px;height:250px;object-fit:cover;object-position:center 20%;border-radius:14px;border:1.5px solid var(--ink);box-shadow:5px 5px 0 #bcd4f7}
+.about p{margin-bottom:14px;color:#34435f}
+.elsewhere a{margin-right:4px}
 
-  <style>
-    /* ═══════════════════════════════════════════════════════════════
-       THEME — edit these CSS variables to restyle the whole page
-       ═══════════════════════════════════════════════════════════════ */
-    :root {
-      --accent:    #2563eb;   /* links, icons, badges          */
-      --text:      #1a1a1a;   /* primary body text             */
-      --muted:     #6b7280;   /* secondary / de-emphasised     */
-      --border:    #e5e7eb;   /* dividers & card borders       */
-      --bg:        #ffffff;   /* page background               */
-      --bg-hover:  #f9fafb;   /* hover state background        */
-      --bg-tag:    #eff6ff;   /* tag pill background           */
-      --max-width: 860px;     /* content column width          */
-      --radius:    6px;       /* corner radius for images etc  */
-    }
+/* news */
+.news{list-style:none;border-top:1px solid var(--line)}
+.news li{display:grid;grid-template-columns:96px 1fr;gap:16px;padding:13px 0;border-bottom:1px solid var(--line);font-size:.95rem}
+.news time{font:500 .78rem var(--mono);color:var(--muted);padding-top:3px}
+.tag{display:inline-block;font:500 .68rem var(--mono);padding:1px 7px;border-radius:99px;background:var(--accent-soft);color:var(--accent);margin-right:6px;vertical-align:1px}
 
-    /* ── Reset ── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; scroll-padding-top: 62px; }
-    body {
-      font-family: 'Inter', system-ui, -apple-system, sans-serif;
-      font-size: 15px;
-      line-height: 1.7;
-      color: var(--text);
-      background: var(--bg);
-      -webkit-font-smoothing: antialiased;
-    }
-    a { color: var(--accent); text-decoration: none; }
-    a:hover { text-decoration: underline; }
+/* research */
+.themes{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.theme{background:var(--card);border:1.5px solid var(--ink);border-radius:14px;padding:20px;box-shadow:4px 4px 0 var(--line)}
+.theme svg{width:100%;height:78px;margin-bottom:12px}
+.theme h3{font-size:1.2rem;margin-bottom:8px}
+.theme p{font-size:.92rem;color:#34435f;margin-bottom:10px}
+.theme .papers{font-size:.82rem;color:var(--muted)}
+.new{font:500 .66rem var(--mono);background:var(--warm);color:#0b3550;border-radius:99px;padding:1px 7px;margin-left:6px;vertical-align:3px}
 
-    /* ── Layout ── */
-    .wrap { max-width: var(--max-width); margin: 0 auto; padding: 0 1.5rem; }
+/* pubs */
+.yr{font:500 .8rem var(--mono);color:var(--muted);margin:30px 0 10px;letter-spacing:.08em}
+.pub{display:grid;grid-template-columns:230px 1fr;gap:22px;padding:18px;margin:0 -18px;border-radius:14px;transition:background .15s}
+.pub:hover{background:#ffffffa8}
+.thumb{width:230px;aspect-ratio:16/10;border-radius:10px;border:1.5px solid var(--ink);overflow:hidden;background:#fff}
+.thumb img,.thumb video{width:100%;height:100%;object-fit:cover;display:block}
+.venue{font:500 .74rem var(--mono);color:var(--accent);margin-bottom:5px}
+.pub h3{font-size:1.18rem;margin-bottom:5px}
+.auth{font-size:.86rem;color:var(--muted);margin-bottom:7px}
+.auth b{color:var(--ink);font-weight:600}
+.pub p.abs{font-size:.92rem;color:#34435f;margin-bottom:10px}
+.plinks{display:flex;flex-wrap:wrap;gap:6px}
+.plinks a{font-size:.78rem;font-weight:500;padding:2px 10px;border:1px solid var(--ink);border-radius:6px;color:var(--ink);background:#fff}
+.plinks a:hover{background:var(--accent);color:#fff;border-color:var(--accent);text-decoration:none}
 
+/* open source */
+.os-note{display:flex;gap:14px;align-items:flex-start;background:linear-gradient(120deg,#eef8fd,#e8f0fe);border:1.5px solid var(--ink);border-radius:14px;padding:16px 18px;margin-bottom:22px;box-shadow:4px 4px 0 var(--line)}
+.os-note span{font-size:1.4rem;line-height:1}
+.os-note p{font-size:.94rem;color:#34435f}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.repo{display:flex;flex-direction:column;background:var(--card);border:1.5px solid var(--ink);border-radius:12px;padding:16px;color:var(--ink);transition:transform .12s,box-shadow .12s}
+.repo:hover{text-decoration:none;transform:translate(-2px,-2px);box-shadow:4px 4px 0 #bcd4f7}
+.repo .nm{font:500 .92rem var(--mono);margin-bottom:6px;display:flex;justify-content:space-between;gap:8px}
+.repo .st{color:var(--muted);font-size:.78rem}
+.repo p{font-size:.86rem;color:#34435f;flex:1;margin-bottom:10px}
+.chips{display:flex;flex-wrap:wrap;gap:5px}
+.chips span{font:500 .68rem var(--mono);background:var(--accent-soft);color:var(--accent);padding:1px 7px;border-radius:99px}
 
-    /* ══════════════════════════════════════════
-       NAVIGATION
-       ══════════════════════════════════════════ */
-    nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(255, 255, 255, 0.88);
-      backdrop-filter: saturate(180%) blur(12px);
-      -webkit-backdrop-filter: saturate(180%) blur(12px);
-      border-bottom: 1px solid var(--border);
-    }
-    nav .wrap {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 54px;
-      gap: 1rem;
-    }
-    .nav-brand {
-      font-weight: 700;
-      font-size: 0.925rem;
-      color: var(--text);
-      text-decoration: none;
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-    .nav-brand:hover { text-decoration: none; }
-    .nav-links {
-      display: flex;
-      gap: 1.25rem;
-      list-style: none;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-    }
-    .nav-links a {
-      font-size: 0.8rem;
-      font-weight: 500;
-      color: var(--muted);
-      text-decoration: none;
-      transition: color 0.15s;
-    }
-    .nav-links a:hover { color: var(--text); }
+/* timeline */
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:44px}
+.cols h3{font-size:1.3rem;margin-bottom:16px}
+.tl{list-style:none;border-left:2px solid var(--line);padding-left:18px}
+.tl li{position:relative;padding-bottom:20px}
+.tl li::before{content:"";position:absolute;left:-25px;top:7px;width:10px;height:10px;border-radius:50%;background:#fff;border:2px solid var(--accent)}
+.tl .d{font:500 .74rem var(--mono);color:var(--muted)}
+.tl b{display:block;font-weight:600}
+.tl .r{font-size:.88rem;color:var(--muted)}
+.tl p{font-size:.88rem;color:#34435f;margin-top:3px}
+.honors{list-style:none;margin-top:6px}
+.honors li{font-size:.9rem;padding:6px 0;border-bottom:1px solid var(--line);color:#34435f}
+.honors b{color:var(--ink)}
 
+/* projects */
+.proj{display:flex;flex-direction:column;background:var(--card);border:1.5px solid var(--ink);border-radius:12px;overflow:hidden}
+.proj img{width:100%;height:120px;object-fit:cover;border-bottom:1.5px solid var(--ink)}
+.proj div{padding:12px 14px}
+.proj b{font-family:var(--serif);font-size:1.02rem}
+.proj p{font-size:.84rem;color:#34435f;margin:3px 0 6px}
 
-    /* ══════════════════════════════════════════
-       HERO / ABOUT
-       ══════════════════════════════════════════ */
-    #about { padding: 3.5rem 0 2.5rem; }
+details{border:1px solid var(--line);border-radius:12px;background:var(--card);padding:4px 18px}
+summary{cursor:pointer;font-weight:500;padding:12px 0}
+details ul{padding:0 0 12px 18px;font-size:.9rem;color:#34435f}
+details li{margin-bottom:5px}
 
-    .hero {
-      display: flex;
-      gap: 3rem;
-      align-items: flex-start;
-    }
-    .hero-bio { flex: 1; order: 1; }
-    .hero-photo { flex-shrink: 0; order: 2; }
-    .hero-photo img {
-      width: 170px;
-      height: 170px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 3px solid var(--border);
-      display: block;
-    }
+.contact{text-align:center}
+.contact p{color:#34435f;max-width:34em;margin:0 auto 20px}
+.contact .btns{justify-content:center}
+footer{padding:28px 0 44px;text-align:center;font-size:.8rem;color:var(--muted)}
 
-    h1.name {
-      font-size: 1.875rem;
-      font-weight: 700;
-      letter-spacing: -0.025em;
-      line-height: 1.2;
-      margin-bottom: 0.3rem;
-    }
-    .tagline {
-      font-size: 0.88rem;
-      color: var(--muted);
-      margin-bottom: 1rem;
-    }
-    .bio-text {
-      font-size: 0.9rem;
-      color: #374151;
-      margin-bottom: 1.25rem;
-      line-height: 1.75;
-    }
-
-    /* Social icon row */
-    .social-links {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 0.5rem 1rem;
-      margin-bottom: 0.85rem;
-    }
-    .social-links a {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.3rem;
-      font-size: 0.82rem;
-      font-weight: 500;
-      color: var(--muted);
-      text-decoration: none;
-      transition: color 0.15s;
-    }
-    .social-links a:hover { color: var(--accent); text-decoration: none; }
-    .social-links a i { font-size: 0.95rem; }
-
-    /* Contact email buttons */
-    .contact-row { display: flex; flex-wrap: wrap; gap: 0.45rem; }
-    .contact-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.3rem;
-      font-size: 0.77rem;
-      font-weight: 500;
-      padding: 0.23rem 0.65rem;
-      border-radius: var(--radius);
-      border: 1px solid var(--border);
-      color: var(--text);
-      text-decoration: none;
-      transition: all 0.15s;
-    }
-    .contact-btn:hover { background: var(--bg-hover); border-color: #d1d5db; text-decoration: none; }
-    .contact-btn i { font-size: 0.82rem; }
-
-
-    /* ══════════════════════════════════════════
-       SECTION BASE
-       ══════════════════════════════════════════ */
-    section { padding: 2.25rem 0; }
-    section + section { border-top: 1px solid var(--border); }
-
-    h2.section-title {
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 1.5rem;
-    }
-
-
-    /* ══════════════════════════════════════════
-       PUBLICATIONS
-       ══════════════════════════════════════════ */
-    .pub-list { display: flex; flex-direction: column; gap: 0; }
-
-    /* Wrapper for pub + optional videos */
-    .pub-item {
-      padding: 1rem;
-      border-radius: 10px;
-      transition: background 0.15s;
-    }
-    .pub-item:hover { background: var(--bg-hover); }
-
-    .pub-entry {
-      display: flex;
-      gap: 1.25rem;
-      align-items: flex-start;
-    }
-    .pub-thumb { flex-shrink: 0; width: 160px; }
-    .pub-thumb img,
-    .pub-thumb video {
-      width: 160px;
-      height: 102px;
-      object-fit: cover;
-      border-radius: var(--radius);
-      border: 1px solid var(--border);
-      display: block;
-      transition: transform 0.2s;
-    }
-    .pub-item:hover .pub-thumb img,
-    .pub-item:hover .pub-thumb video { transform: scale(1.03); }
-
-    .pub-content { flex: 1; min-width: 0; }
-    .pub-title {
-      font-size: 0.91rem;
-      font-weight: 600;
-      color: var(--text);
-      line-height: 1.4;
-      margin-bottom: 0.25rem;
-    }
-    .pub-authors {
-      font-size: 0.82rem;
-      color: var(--muted);
-      margin-bottom: 0.1rem;
-    }
-    .pub-authors strong { color: var(--text); font-weight: 600; }
-    .pub-venue {
-      font-size: 0.79rem;
-      font-style: italic;
-      color: var(--muted);
-      margin-bottom: 0.5rem;
-    }
-    .pub-abstract {
-      font-size: 0.82rem;
-      color: #4b5563;
-      line-height: 1.65;
-      margin-bottom: 0.6rem;
-    }
-    .pub-links { display: flex; flex-wrap: wrap; gap: 0.35rem; }
-    .pub-links a {
-      font-size: 0.76rem;
-      font-weight: 500;
-      padding: 0.14rem 0.52rem;
-      border-radius: 4px;
-      border: 1px solid var(--border);
-      color: var(--text);
-      text-decoration: none;
-      transition: all 0.15s;
-    }
-    .pub-links a:hover {
-      background: var(--accent);
-      color: #fff;
-      border-color: var(--accent);
-      text-decoration: none;
-    }
-
-    /* Video cards (for papers with demos) */
-    .pub-videos {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.75rem;
-      margin-top: 1rem;
-    }
-    .video-card {
-      flex: 1 1 calc(50% - 0.375rem);
-      min-width: 240px;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      overflow: hidden;
-    }
-    .video-responsive { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; }
-    .video-responsive iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
-    .video-label {
-      padding: 0.28rem 0.6rem;
-      font-size: 0.73rem;
-      color: var(--muted);
-      background: var(--bg-hover);
-      border-top: 1px solid var(--border);
-    }
-
-
-    /* ══════════════════════════════════════════
-       EXPERIENCE (Research + Industry)
-       ══════════════════════════════════════════ */
-    .exp-list { display: flex; flex-direction: column; gap: 1.5rem; }
-
-    .exp-entry { display: flex; gap: 1.5rem; }
-    .exp-date {
-      flex-shrink: 0;
-      width: 115px;
-      font-size: 0.77rem;
-      color: var(--muted);
-      padding-top: 0.15rem;
-      font-variant-numeric: tabular-nums;
-    }
-    .exp-body { flex: 1; }
-    .exp-body h3 { font-size: 0.91rem; font-weight: 600; margin-bottom: 0.05rem; }
-    .exp-body .role { font-size: 0.82rem; color: var(--muted); margin-bottom: 0.4rem; }
-    .exp-body p, .exp-body ul {
-      font-size: 0.85rem;
-      color: #374151;
-    }
-    .exp-body ul { padding-left: 1.1rem; margin-top: 0.2rem; }
-    .exp-body li { margin-bottom: 0.15rem; }
-
-    /* LinkedIn recommendation button */
-    .btn-linkedin {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.3rem;
-      font-size: 0.77rem;
-      font-weight: 500;
-      padding: 0.22rem 0.6rem;
-      border-radius: var(--radius);
-      background: #0077b5;
-      color: #fff;
-      text-decoration: none;
-      margin-top: 0.5rem;
-      transition: background 0.15s;
-    }
-    .btn-linkedin:hover { background: #005f93; text-decoration: none; color: #fff; }
-
-    /* Promotion sub-timeline */
-    .promo-timeline {
-      border-left: 2px solid var(--border);
-      padding-left: 1rem;
-      margin-top: 0.75rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.8rem;
-    }
-    .promo-meta {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      margin-bottom: 0.2rem;
-      font-size: 0.77rem;
-      color: var(--muted);
-    }
-    .promo-item h4 { font-size: 0.84rem; font-weight: 600; }
-    .promo-item p { font-size: 0.82rem; color: #4b5563; margin-top: 0.2rem; }
-
-    /* Badge pill */
-    .badge {
-      display: inline-block;
-      font-size: 0.68rem;
-      font-weight: 600;
-      padding: 0.08rem 0.45rem;
-      border-radius: 999px;
-      background: var(--accent);
-      color: #fff;
-      letter-spacing: 0.03em;
-      vertical-align: middle;
-    }
-    .badge-gray { background: var(--muted); }
-
-
-    /* ══════════════════════════════════════════
-       EDUCATION — reuses .exp-list / .exp-entry
-       ══════════════════════════════════════════ */
-    .edu-gpa { font-size: 0.84rem; color: #374151; margin-top: 0.15rem; }
-
-
-    /* ══════════════════════════════════════════
-       HONORS & AWARDS
-       ══════════════════════════════════════════ */
-    .honors-list { display: flex; flex-direction: column; gap: 1rem; }
-    .honor-entry { display: flex; gap: 0.75rem; align-items: flex-start; }
-    .honor-icon { color: var(--accent); font-size: 0.85rem; margin-top: 0.22rem; flex-shrink: 0; }
-    .honor-entry h3 { font-size: 0.88rem; font-weight: 600; margin-bottom: 0.08rem; }
-    .honor-entry p { font-size: 0.82rem; color: var(--muted); }
-
-
-    /* ══════════════════════════════════════════
-       PROJECTS
-       ══════════════════════════════════════════ */
-    .project-list { display: flex; flex-direction: column; gap: 0; }
-
-    .project-item {
-      display: flex;
-      gap: 1.25rem;
-      align-items: flex-start;
-      padding: 0.85rem;
-      border-radius: 10px;
-      transition: background 0.15s;
-    }
-    .project-item:hover { background: var(--bg-hover); }
-
-    .project-thumb { flex-shrink: 0; width: 140px; }
-    .project-thumb img {
-      width: 140px;
-      height: 90px;
-      object-fit: cover;
-      border-radius: var(--radius);
-      border: 1px solid var(--border);
-      display: block;
-      transition: transform 0.2s;
-    }
-    .project-item:hover .project-thumb img { transform: scale(1.04); }
-
-    .project-content { flex: 1; }
-    .project-content h3 { font-size: 0.88rem; font-weight: 600; margin-bottom: 0.18rem; }
-    .project-content p { font-size: 0.84rem; color: #4b5563; margin-bottom: 0.4rem; }
-
-    .tag-list { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-bottom: 0.45rem; }
-    .tag {
-      font-size: 0.69rem;
-      font-weight: 500;
-      padding: 0.08rem 0.45rem;
-      border-radius: 999px;
-      background: var(--bg-tag);
-      color: #1d4ed8;
-      border: 1px solid #dbeafe;
-    }
-
-    .project-links { display: flex; gap: 0.35rem; }
-    .project-links a {
-      font-size: 0.76rem;
-      font-weight: 500;
-      padding: 0.14rem 0.52rem;
-      border-radius: 4px;
-      border: 1px solid var(--border);
-      color: var(--text);
-      text-decoration: none;
-      transition: all 0.15s;
-    }
-    .project-links a:hover {
-      background: var(--accent);
-      color: #fff;
-      border-color: var(--accent);
-      text-decoration: none;
-    }
-
-
-    /* ══════════════════════════════════════════
-       TEACHING & SERVICE
-       ══════════════════════════════════════════ */
-    .teaching-block { margin-bottom: 1.75rem; }
-    .teaching-block:last-child { margin-bottom: 0; }
-    .teaching-block h3 { font-size: 0.9rem; font-weight: 600; margin-bottom: 0.1rem; }
-    .teaching-block .meta { font-size: 0.79rem; color: var(--muted); margin-bottom: 0.65rem; }
-
-    .course-list { display: flex; flex-direction: column; gap: 0.3rem; }
-    .course-item { font-size: 0.84rem; color: #374151; }
-    .course-item strong { color: var(--text); }
-    .course-item .instr { color: var(--muted); font-size: 0.8rem; }
-
-
-    /* ══════════════════════════════════════════
-       HOBBIES
-       ══════════════════════════════════════════ */
-    .hobbies-text { font-size: 0.9rem; color: #374151; margin-bottom: 0.75rem; }
-    .hobby-links { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-    .hobby-links a {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      font-size: 0.82rem;
-      font-weight: 500;
-      padding: 0.28rem 0.75rem;
-      border-radius: var(--radius);
-      border: 1px solid var(--border);
-      color: var(--text);
-      text-decoration: none;
-      transition: all 0.15s;
-    }
-    .hobby-links a:hover { background: var(--bg-hover); border-color: #d1d5db; text-decoration: none; }
-
-
-    /* ══════════════════════════════════════════
-       FOOTER
-       ══════════════════════════════════════════ */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 1.75rem 0;
-      margin-top: 0.5rem;
-      text-align: center;
-      font-size: 0.77rem;
-      color: var(--muted);
-    }
-
-
-    /* ══════════════════════════════════════════
-       RESPONSIVE — mobile (≤ 640px)
-       ══════════════════════════════════════════ */
-    @media (max-width: 640px) {
-      h1.name { font-size: 1.5rem; }
-
-      .hero { flex-direction: column; align-items: center; text-align: center; gap: 1.5rem; }
-      .hero-photo { order: -1; }
-      .hero-photo img { width: 130px; height: 130px; }
-      .social-links { justify-content: center; }
-      .contact-row { justify-content: center; }
-
-      .pub-entry { flex-direction: column; }
-      .pub-thumb, .pub-thumb img, .pub-thumb video { width: 100%; height: 170px; }
-
-      .project-item { flex-direction: column; }
-      .project-thumb, .project-thumb img { width: 100%; height: 140px; }
-
-      .exp-entry { flex-direction: column; gap: 0.1rem; }
-      .exp-date { width: auto; }
-
-      .video-card { flex: 1 1 100%; min-width: unset; }
-
-      .nav-links { display: none; }
-    }
-  </style>
+@media(max-width:860px){
+  .hero{grid-template-columns:1fr;gap:36px;padding-top:44px}
+  .themes,.grid,.cols{grid-template-columns:1fr}
+  .about{grid-template-columns:1fr}
+  .about img{width:150px;height:190px}
+  .pub{grid-template-columns:1fr;margin:0}
+  .thumb{width:100%}
+  .brand span{display:none}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
 </head>
 <body>
+<nav><div class="wrap">
+  <a class="brand" href="#top"><i>✦</i><span>AmirHossein Razlighi</span></a>
+  <ul class="links">
+    <li><a href="#about">About</a></li><li><a href="#news">News</a></li><li><a href="#research">Research</a></li>
+    <li><a href="#publications">Publications</a></li><li><a href="#opensource">Open source</a></li>
+    <li><a href="#experience">Experience</a></li><li><a href="#contact">Contact</a></li>
+  </ul>
+</div></nav>
 
-  <!-- ══════════════════════════════════════════
-       NAVIGATION
-       Edit .nav-brand text and .nav-links items to match your sections.
-       ══════════════════════════════════════════ -->
-  <nav>
-    <div class="wrap">
-      <a class="nav-brand" href="#about">AmirHossein Razlighi</a>
-      <ul class="nav-links">
-        <li><a href="#publications">Publications</a></li>
-        <li><a href="#research">Research</a></li>
-        <li><a href="#industry">Industry</a></li>
-        <li><a href="#education">Education</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#teaching">Teaching</a></li>
+<main id="top" class="wrap">
+
+<header class="hero">
+  <div>
+    <h1>AmirHossein (Amir) Razlighi</h1>
+    <p class="lead">I am a PhD student at the <a href="https://gruvi.cs.sfu.ca/">GrUVi Lab at Simon Fraser University</a> and the <a href="https://graphics.cs.ucy.ac.cy/people">University of Cyprus</a>, advised by <a href="https://arash-mham.github.io/">Ali Mahdavi-Amiri</a>, <a href="https://danielcohenor.com">Daniel Cohen-Or</a> and <a href="https://www.cs.ucy.ac.cy/~yiorgos/">Yiorgos Chrysanthou</a>.</p>
+    <p>I work on image and video generation and editing, with a focus on control, and on using video models as world models and reasoners. I also work on 3D/4D scene representations.</p>
+    <div class="btns">
+      <a class="btn primary" href="#publications">Publications</a>
+      <a class="btn" href="https://scholar.google.com/citations?user=JbQgt-QAAAAJ&hl=en&oi=ao">Google Scholar</a>
+      <a class="btn" href="#opensource">Open source</a>
+    </div>
+  </div>
+
+  <figure class="lab" aria-label="Interactive demo: noise flowing into a chosen shape">
+    <div class="lab-bar"><span>flow_matching.demo → <b id="shape">AR</b></span><span id="tval">t = 0.00</span></div>
+    <canvas id="flow" width="720" height="590"></canvas>
+    <div class="lab-ctl">
+      <span>noise</span><input id="t" type="range" min="0" max="1" step="0.001" value="0" aria-label="Flow time t"><span>data</span>
+      <button id="poke" class="shuf" type="button" aria-label="Next shape"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 3h5v5M4 20 21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/></svg>shuffle</button>
+    </div>
+    <figcaption class="lab-cap">Each dot is a Gaussian moving along x<sub>t</sub> = (1−t)ε + t·x<sub>1</sub>.</figcaption>
+  </figure>
+</header>
+
+<section id="about">
+  <h2>About</h2>
+  <div class="about">
+    <img src="images/profile.jpeg" alt="Portrait of AmirHossein Razlighi">
+    <div>
+      <p>I am a PhD student working on image and video generation and editing. I want diffusion and flow models to be controllable, and I want to understand what video models know about the world, so they can be used as world models and for reasoning.</p>
+      <p>My recent work is on joint audio-video diffusion models. <em>Soundwich</em> splits the generated audio into stems (speech, music, effects, ambience) that can be edited independently. <em>Sound Sparks Motion</em> edits motion at test time, without retraining the model.</p>
+      <p>Earlier I worked on 3D and 4D reconstruction at ETH Zurich and INSAIT, and on robot manipulation at the University of Toronto. I did my BSc at Sharif University of Technology, and worked at Tapsi on ETA and navigation models.</p>
+      <p class="elsewhere">Elsewhere: <a href="https://github.com/amirhossein-razlighi">GitHub</a> · <a href="https://scholar.google.com/citations?user=JbQgt-QAAAAJ&hl=en&oi=ao">Scholar</a> · <a href="https://linkedin.com/in/amirhossein-razlighi/">LinkedIn</a> · <a href="https://x.com/amir_razlighi">X</a> · <a href="https://medium.com/@arazlighi">Medium</a></p>
+    </div>
+  </div>
+</section>
+
+<section id="news">
+  <h2>News</h2>
+  <ul class="news">
+    <li><time>Oct 2026</time><span><span class="tag">paper</span><a href="https://arxiv.org/abs/2610.00691">Soundwich</a> is on arXiv: video generation with layered, controllable audio.</span></li>
+    <li><time>2026</time><span><span class="tag">open source</span>Selected for Anthropic's <b>Claude for Open Source</b> program.</span></li>
+    <li><time>Jul 2026</time><span><span class="tag">role</span>Joined CYENS Centre of Excellence as a part-time Research Scientist.</span></li>
+    <li><time>May 2026</time><span><span class="tag">paper</span><a href="https://arxiv.org/abs/2605.15307">Sound Sparks Motion</a> is on arXiv and under review at ICLR 2027.</span></li>
+    <li><time>Jan 2026</time><span><span class="tag">phd</span>Started my PhD at the University of Cyprus and GrUVi Lab, SFU.</span></li>
+  </ul>
+</section>
+
+<section id="research">
+  <h2>Research</h2>
+  <div class="themes">
+    <article class="theme">
+      <svg viewBox="0 0 200 78" aria-hidden="true"><g fill="none" stroke="#14213d" stroke-width="1.6"><rect x="8" y="14" width="52" height="50" rx="6" fill="#fff"/><rect x="74" y="14" width="52" height="50" rx="6" fill="#fff"/><rect x="140" y="14" width="52" height="50" rx="6" fill="#e4eefc"/><path d="M60 39h14M126 39h14" stroke-dasharray="3 3"/></g><path d="M18 52q10-22 20-4t14-18" stroke="#2f5fd0" stroke-width="2.4" fill="none"/><path d="M84 52q10-22 20-4t14-18" stroke="#2f5fd0" stroke-width="2.4" fill="none"/><path d="M150 52q10-22 20-4t14-18" stroke="#5bb6e8" stroke-width="2.4" fill="none"/></svg>
+      <h3>Control in image and video generation and editing</h3>
+      <p>Precise control over image, video and audio-video diffusion models without retraining them: tuning the conditioning at test time, and splitting what a model generates into parts that can be edited separately.</p>
+      <div class="papers">Soundwich · Sound Sparks Motion</div>
+    </article>
+    <article class="theme">
+      <svg viewBox="0 0 200 78" aria-hidden="true"><g fill="none" stroke="#14213d" stroke-width="1.6"><circle cx="100" cy="40" r="26" fill="#fff"/><ellipse cx="100" cy="40" rx="26" ry="9"/><ellipse cx="100" cy="40" rx="9" ry="26"/></g><g fill="#2f5fd0"><circle cx="30" cy="22" r="4"/><circle cx="170" cy="58" r="4" fill="#5bb6e8"/><circle cx="26" cy="58" r="3"/><circle cx="174" cy="20" r="3"/></g><path d="M34 24q30 6 42 14M166 56q-30-6-42-14" stroke="#2f5fd0" stroke-dasharray="3 3" fill="none"/></svg>
+      <h3>Video models as world models and reasoners</h3>
+      <p>Video diffusion models appear to learn physics, geometry and cause and effect. I want to understand how to use them as simulators of the world, and as models that can reason.</p>
+      <div class="papers">Ongoing</div>
+    </article>
+    <article class="theme">
+      <svg viewBox="0 0 200 78" aria-hidden="true"><g fill="#2f5fd0" fill-opacity=".55"><circle cx="40" cy="44" r="14"/><circle cx="70" cy="30" r="10" fill="#5bb6e8"/><circle cx="96" cy="48" r="16"/><circle cx="130" cy="34" r="12" fill="#5bb6e8"/><circle cx="158" cy="48" r="9"/><circle cx="104" cy="22" r="6"/></g><g fill="none" stroke="#14213d" stroke-width="1.4"><ellipse cx="40" cy="44" rx="14" ry="14"/><ellipse cx="96" cy="48" rx="16" ry="16"/><ellipse cx="130" cy="34" rx="12" ry="12"/></g></svg>
+      <h3>3D and 4D scene representations</h3>
+      <p>Dynamic scene representations: Gaussian Splatting and implicit fields that handle large topological change, and compression that keeps visual fidelity.</p>
+      <div class="papers">N4DE · Confident Splatting · mlx3D</div>
+    </article>
+  </div>
+</section>
+
+<section id="publications">
+  <h2>Publications</h2>
+  <p class="sub">* equal contribution</p>
+
+  <div class="yr">2026</div>
+
+  <article class="pub">
+    <div class="thumb"><img src="images/soundwich.gif" alt="Soundwich teaser" loading="lazy"></div>
+    <div>
+      <div class="venue">arXiv preprint, 2026</div>
+      <h3>Soundwich: Video Generation with Layered and Controllable Audio</h3>
+      <div class="auth">Zhuo Ning, <b>AmirHossein Naghi Razlighi</b>, Sagi Polaczek, Daniel Cohen-Or, Ali Mahdavi-Amiri</div>
+      <p class="abs">Decomposes the audio of joint audio-video generative models into independently controllable stems (speech, music, sound effects and ambience) tied together by a shared scene representation. Each stem can be adjusted, muted, replaced or remixed while staying in sync with the video.</p>
+      <div class="plinks"><a href="https://arxiv.org/abs/2610.00691">arXiv</a><a href="https://soundwich.avdemo.workers.dev">Project page</a><a href="https://github.com/CodyNing/Soundwich">Code</a></div>
+    </div>
+  </article>
+
+  <article class="pub">
+    <div class="thumb"><video src="https://amirhossein-razlighi.github.io/Sound_Sparks_Motion/assets/videos/rose_output.mp4" autoplay muted loop playsinline preload="metadata"></video></div>
+    <div>
+      <div class="venue">arXiv preprint · under review at ICLR 2027</div>
+      <h3>Sound Sparks Motion: Audio and Text Tuning for Video Editing</h3>
+      <div class="auth"><b>AmirHossein Naghi Razlighi</b>, Aryan Mikaeili, Ali Mahdavi-Amiri, Daniel Cohen-Or, Yiorgos Chrysanthou</div>
+      <p class="abs">A test-time tuning framework for motion-focused video editing inside audio-visual generative models. Instead of retraining, we tune two lightweight variables, an audio latent and a text-conditioning residual, guided by vision-language model feedback. The learned controls transfer across videos.</p>
+      <div class="plinks"><a href="https://arxiv.org/abs/2605.15307">arXiv</a><a href="https://amirhossein-razlighi.github.io/Sound_Sparks_Motion/">Project page</a><a href="https://github.com/amirhossein-razlighi/Sound_Sparks_Motion">Code</a></div>
+    </div>
+  </article>
+
+  <div class="yr">2025</div>
+
+  <article class="pub">
+    <div class="thumb"><img src="images/confident.png" alt="Confident Splatting teaser" loading="lazy"></div>
+    <div>
+      <div class="venue">Preprint, 2025</div>
+      <h3>Confident Splatting: Confidence-Based Compression of 3D Gaussian Splatting via Learnable Beta Distributions</h3>
+      <div class="auth"><b>AmirHossein Naghi Razlighi</b>, Elaheh Badali Golezani, Shohreh Kasaei</div>
+      <p class="abs">Lossy 3DGS compression with learnable Beta-distribution confidence scores. Low-confidence splats are pruned while visual fidelity is preserved. The method is architecture-agnostic and introduces average confidence as a scene-quality metric.</p>
+      <div class="plinks"><a href="https://arxiv.org/abs/2506.22973">arXiv</a><a href="https://amirhossein-razlighi.github.io/Confident-Splatting/">Project page</a><a href="https://github.com/amirhossein-razlighi/Confident-Splatting">Code</a></div>
+    </div>
+  </article>
+
+  <div class="yr">2024 AND EARLIER</div>
+
+  <article class="pub">
+    <div class="thumb"><img src="images/N4DE.png" alt="N4DE teaser" loading="lazy"></div>
+    <div>
+      <div class="venue">Preprint, 2024</div>
+      <h3>N4DE: Neural 4D Evolution under Large Topological Changes from 2D Images</h3>
+      <div class="auth"><b>AmirHossein Naghi Razlighi</b>, Tiago Novello, Asen Nachkov, Thomas Probst, Danda Paudel</div>
+      <p class="abs">A new architecture and temporal-consistency technique for 4D reconstruction under large topological changes, with a Gaussian Splatting rendering scheme and a geometry-appearance disentanglement learned directly from RGB images.</p>
+      <div class="plinks"><a href="https://arxiv.org/abs/2411.15018">arXiv</a><a href="https://github.com/amirhossein-razlighi/N4DE">Code</a></div>
+    </div>
+  </article>
+
+  <article class="pub">
+    <div class="thumb"><img src="images/mars.png" alt="MARS teaser" loading="lazy"></div>
+    <div>
+      <div class="venue">Preprint, 2023</div>
+      <h3>MARS: Multi-task Action Prediction for Robot Manipulation based on Scene Representation</h3>
+      <div class="auth">Haoping Xu, Richard Hanxu*, <b>AmirHossein Naghi Razlighi</b>*, Alan Aspuru-Guzik, Florian Shkurti, Animesh Garg</div>
+      <p class="abs">Uses Scene Representation Transformers to render novel views from RGB observations, then predicts end-effector poses and gripper states from language-conditioned keyframe demonstrations.</p>
+      <div class="plinks"><a href="https://drive.google.com/file/d/1iwb_fIVS-qDN-Yuk36_N90kwPsT0BQ0c/view?usp=sharing">PDF</a><a href="https://drive.google.com/file/d/1yStpz7G80C9o6FQSZRtEnb3uTlebOcAw/view">Demo 1</a><a href="https://drive.google.com/file/d/1RuYqlEcZZbp6dFv8hWG4hkVBQoawwqaw/view">Demo 2</a></div>
+    </div>
+  </article>
+</section>
+
+<section id="opensource">
+  <h2>Open source</h2>
+  <p class="sub">Mostly tools for 3D vision and generative models on Apple Silicon.</p>
+  <div class="os-note">
+    <span>✦</span>
+    <p>Selected for Anthropic's <b>Claude for Open Source</b> program. My main open-source projects are <a href="https://github.com/amirhossein-razlighi/mlx3D">mlx3D</a> and <a href="https://github.com/amirhossein-razlighi/mlx_diffuser">mlx_diffuser</a>.</p>
+  </div>
+  <div class="grid">
+    <a class="repo" href="https://github.com/amirhossein-razlighi/mlx3D"><div class="nm">mlx3D <span class="st">★ 43</span></div><p>Differentiable 3D computer vision on Apple Silicon, built on MLX: meshes, NeRF and 3D Gaussian Splatting with Metal kernels.</p><div class="chips"><span>MLX</span><span>Metal</span><span>NeRF</span><span>3DGS</span></div></a>
+    <a class="repo" href="https://github.com/amirhossein-razlighi/mlx_diffuser"><div class="nm">mlx_diffuser <span class="st">★ 6</span></div><p>MLX implementations of well-known generative models for efficient training, inference and fine-tuning on Apple Silicon.</p><div class="chips"><span>MLX</span><span>diffusion</span></div></a>
+    <a class="repo" href="https://github.com/amirhossein-razlighi/Torch3DR"><div class="nm">Torch3DR</div><p>A PyTorch-compatible library to design, run and visualize models for different 3D computer vision tasks.</p><div class="chips"><span>PyTorch</span><span>3D vision</span></div></a>
+    <a class="repo" href="https://github.com/amirhossein-razlighi/Metal_Puzzles"><div class="nm">Metal_Puzzles</div><p>Ten puzzles for learning GPU programming in Metal.</p><div class="chips"><span>Metal</span><span>GPU</span></div></a>
+    <a class="repo" href="https://github.com/amirhossein-razlighi/Gemma_RA"><div class="nm">Gemma_RA <span class="st">★ 4</span></div><p>A research-assistant agent for many research tasks, powered by Gemma.</p><div class="chips"><span>agents</span><span>Gemma</span></div></a>
+    <a class="repo" href="https://github.com/amirhossein-razlighi/Skywalker"><div class="nm">Skywalker</div><p>A game engine built from the ground up for AI agents.</p><div class="chips"><span>C++</span><span>game engine</span></div></a>
+  </div>
+</section>
+
+<section id="experience">
+  <h2>Experience</h2>
+    <div class="cols">
+    <div>
+      <h3>Research</h3>
+      <ul class="tl">
+        <li><span class="d">Jan 2026 – present</span><b>GrUVi Lab, Simon Fraser University</b><span class="r">PhD student, research assistant</span><p>Video generative models and 3D computer vision, with Ali Mahdavi-Amiri and Daniel Cohen-Or.</p></li>
+        <li><span class="d">Jul 2026 – present</span><b>CYENS Centre of Excellence, Cyprus</b><span class="r">Research Scientist (part-time)</span><p>Machine learning and computer graphics research.</p></li>
+        <li><span class="d">Jun – Oct 2024</span><b>INSAIT</b><span class="r">Summer research intern</span><p>Dynamic 3D reconstruction with SDFs inside Gaussian Splatting; built a dataset of hard deformable scenes.</p></li>
+        <li><span class="d">Jun 2023 – Jul 2024</span><b>ETH Zurich</b><span class="r">Research assistant, with Danda Paudel</span><p>NeRFs for dynamic scenes; SDF morphing from RGB images and SDF-based regularizers.</p></li>
+        <li><span class="d">2023</span><b>University of Toronto</b><span class="r">Summer research intern, with Florian Shkurti and Animesh Garg</span><p>Robot manipulation from NeRF-based scene encodings.</p></li>
       </ul>
     </div>
-  </nav>
-
-  <main>
-    <div class="wrap">
-
-      <!-- ══════════════════════════════════════════
-           ABOUT / HERO
-           Edit name, tagline, bio-text, and links below.
-           ══════════════════════════════════════════ -->
-      <section id="about">
-        <div class="hero">
-
-          <div class="hero-bio">
-            <h1 class="name">AmirHossein (Amir) Razlighi</h1>
-            <p class="tagline">
-              Research Assistant &nbsp;·&nbsp; GrUVi Lab @ SFU &nbsp;·&nbsp;
-              3D Vision &nbsp;·&nbsp; Generative Models
-            </p>
-
-            <p class="bio-text">
-              I'm a PhD student and research assistant at <a href="https://gruvi.cs.sfu.ca/">GrUVi Lab @ SFU</a> and <a href="https://graphics.cs.ucy.ac.cy/people">UCY</a>,
-              supervised by <a href="https://arash-mham.github.io/">Prof. Arash Mahdavi-Amiri</a> (SFU), 
-              <a href="https://danielcohenor.com">Prof. Daniel Cohen-Or</a>, and <a href="https://www.cs.ucy.ac.cy/~yiorgos/">Prof. Yiorgos Chrysanthou</a> (UCY).
-              My research sits at the intersection of <strong>3D computer vision</strong>, 
-              <strong>generative AI</strong>, and <strong>video generative models</strong> — I'm fascinated by how machines perceive, reconstruct,
-              and generate realistic 3D worlds. I'm always open to collaborations and happy to chat
-              about anything vision, graphics, or beyond!
-            </p>
-
-            <!-- Social links — add/remove <a> tags as needed -->
-            <div class="social-links">
-              <a href="https://github.com/amirhossein-razlighi" target="_blank" rel="noopener">
-                <i class="fab fa-github"></i> GitHub
-              </a>
-              <a href="https://linkedin.com/in/amirhossein-razlighi/" target="_blank" rel="noopener">
-                <i class="fab fa-linkedin"></i> LinkedIn
-              </a>
-              <a href="https://x.com/amir_razlighi" target="_blank" rel="noopener">
-                <i class="fab fa-twitter"></i> Twitter
-              </a>
-              <a href="https://scholar.google.com/citations?user=JbQgt-QAAAAJ&hl=en&oi=ao" target="_blank" rel="noopener">
-                <i class="fas fa-graduation-cap"></i> Scholar
-              </a>
-              <a href="https://medium.com/@arazlighi" target="_blank" rel="noopener">
-                <i class="fab fa-medium"></i> Medium
-              </a>
-            </div>
-
-            <!-- Contact email buttons — add/remove as needed -->
-            <div class="contact-row">
-              <a href="mailto:arazlighi@gmail.com" class="contact-btn">
-                <i class="fab fa-google"></i> Gmail
-              </a>
-              <a href="mailto:amirhossein_naghi_razlighi@sfu.ca" class="contact-btn">
-                <i class="fas fa-university"></i> SFU Mail
-              </a>
-              <a href="mailto:naghirazlighi.amirhossein@ucy.ac.cy" class="contact-btn">
-                <i class="fas fa-university"></i> UCY Mail
-              </a>
-            </div>
-          </div>
-
-          <div class="hero-photo">
-            <img src="images/profile.jpeg" alt="AmirHossein Razlighi">
-          </div>
-
-        </div>
-      </section>
-
-
-      <!-- ══════════════════════════════════════════
-           PUBLICATIONS
-
-           HOW TO ADD A PUBLICATION:
-             1. Copy one complete .pub-item block below.
-             2. Fill in:
-                  • .pub-thumb img[src]   — thumbnail image path
-                  • .pub-title            — paper title
-                  • .pub-authors          — wrap YOUR name in <strong>...</strong>
-                  • .pub-venue            — conference / journal / status
-                  • .pub-abstract         — one-sentence excerpt (optional: delete <p> tag)
-                  • .pub-links a          — arXiv / PDF / Project / Code / ...
-             3. If the paper has demo videos, uncomment the .pub-videos block template.
-
-           HOW TO REMOVE: delete the entire .pub-item block.
-           ══════════════════════════════════════════ -->
-      <section id="publications">
-        <h2 class="section-title">Publications</h2>
-        <div class="pub-list">
-
-          <!-- ── Soundwich ──────────────────────────────────────── -->
-          <div class="pub-item">
-            <div class="pub-entry">
-              <div class="pub-thumb">
-                <img src="images/soundwich.gif" alt="Soundwich" loading="lazy">
-              </div>
-              <div class="pub-content">
-                <p class="pub-title">🍔 Soundwich: Video Generation with Layered and Controllable Audio</p>
-                <p class="pub-authors">
-                  Zhuo Ning, <strong>AmirHossein Naghi Razlighi</strong>, Sagi Polaczek,
-                  Daniel Cohen-Or, Ali Mahdavi-Amiri
-                </p>
-                <p class="pub-venue">arXiv preprint, 2026</p>
-                <p class="pub-abstract">
-                  A framework that decomposes the audio of joint audio-video generative models into
-                  independently controllable stems — speech, music, sound effects, and ambience —
-                  tied together by a shared scene representation. Each stem can be adjusted, muted,
-                  replaced, or remixed while staying synchronized with the video.
-                </p>
-                <div class="pub-links">
-                  <a href="https://arxiv.org/abs/2610.00691" target="_blank" rel="noopener">arXiv</a>
-                  <a href="https://soundwich.avdemo.workers.dev" target="_blank" rel="noopener">Project Page</a>
-                  <a href="https://github.com/CodyNing/Soundwich" target="_blank" rel="noopener">Code</a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- ─────────────────────────────────────────────────────── -->
-
-          <!-- ── Sound Sparks Motion ────────────────────────────── -->
-          <!-- TEMPORARILY HIDDEN — uncomment the block below to restore it -->
-          
-          <div class="pub-item">
-            <div class="pub-entry">
-              <div class="pub-thumb">
-                <video autoplay muted loop playsinline
-                  poster="https://amirhossein-razlighi.github.io/Sound_Sparks_Motion/assets/images/teaser.jpg">
-                  <source src="https://amirhossein-razlighi.github.io/Sound_Sparks_Motion/assets/videos/rose_output.mp4" type="video/mp4">
-                </video>
-              </div>
-              <div class="pub-content">
-                <p class="pub-title">Sound Sparks Motion: Audio and Text Tuning for Video Editing</p>
-                <p class="pub-authors">
-                  <strong>AmirHossein Naghi Razlighi</strong>, Aryan Mikaeili, Ali Mahdavi-Amiri,
-                  Daniel Cohen-Or, Yiorgos Chrysanthou
-                </p>
-                <p class="pub-venue">arXiv preprint &nbsp;·&nbsp; Under review at SIGGRAPH Asia 2026</p>
-                <p class="pub-abstract">
-                  A test-time tuning framework for motion-focused video editing inside audio-visual
-                  generative models. Instead of retraining, we tune two lightweight variables — an
-                  audio latent and a text-conditioning residual — guided by vision-language model
-                  feedback. The learned controls transfer across videos, suggesting they capture
-                  reusable motion directions in the model's multimodal conditioning space.
-                </p>
-                <div class="pub-links">
-                  <a href="https://arxiv.org/abs/2605.15307" target="_blank" rel="noopener">arXiv</a>
-                  <a href="https://amirhossein-razlighi.github.io/Sound_Sparks_Motion/" target="_blank" rel="noopener">Project Page</a>
-                </div>
-              </div>
-            </div>
-          </div>
-         
-          <!-- ─────────────────────────────────────────────────────── -->
-
-          <!-- ── Confident Splatting ─────────────────────────────── -->
-          <div class="pub-item">
-            <div class="pub-entry">
-              <div class="pub-thumb">
-                <img src="images/confident.png" alt="Confident Splatting" loading="lazy">
-              </div>
-              <div class="pub-content">
-                <p class="pub-title">Confident Splatting: Confidence-Based Compression of 3D Gaussian Splatting via Learnable Beta Distributions</p>
-                <p class="pub-authors">
-                  <strong>AmirHossein Naghi Razlighi</strong>, Elaheh Badali Golezani, Shohreh Kasaei
-                </p>
-                <p class="pub-venue">Preprint, 2025</p>
-                <p class="pub-abstract">
-                  A lossy compression method for 3DGS using learnable Beta-distribution confidence scores.
-                  Low-confidence splats are pruned while preserving visual fidelity; the method is architecture-agnostic
-                  and introduces average confidence as a new scene-quality metric.
-                </p>
-                <div class="pub-links">
-                  <a href="https://arxiv.org/abs/2506.22973" target="_blank" rel="noopener">arXiv</a>
-                  <a href="https://amirhossein-razlighi.github.io/Confident-Splatting/" target="_blank" rel="noopener">Project Page</a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- ─────────────────────────────────────────────────────── -->
-
-          <!-- ── N4DE ───────────────────────────────────────────── -->
-          <div class="pub-item">
-            <div class="pub-entry">
-              <div class="pub-thumb">
-                <img src="images/N4DE.png" alt="N4DE" loading="lazy">
-              </div>
-              <div class="pub-content">
-                <p class="pub-title">N4DE: Neural 4D Evolution under Large Topological Changes from 2D Images</p>
-                <p class="pub-authors">
-                  <strong>AmirHossein Naghi Razlighi</strong>, Tiago Novello, Asen Nachkov, Thomas Probst, Danda Paudel
-                </p>
-                <p class="pub-venue">Preprint, 2024</p>
-                <p class="pub-abstract">
-                  Novel architecture + temporal consistency technique for 4D reconstruction under large topological
-                  changes. Introduces a Gaussian Splatting rendering scheme and a geometry-appearance disentanglement
-                  framework learned directly from RGB images.
-                </p>
-                <div class="pub-links">
-                  <a href="https://arxiv.org/abs/2411.15018" target="_blank" rel="noopener">arXiv</a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- ─────────────────────────────────────────────────────── -->
-
-          <!-- ── MARS (paper + demo videos) ────────────────────── -->
-          <div class="pub-item">
-            <div class="pub-entry">
-              <div class="pub-thumb">
-                <img src="images/mars.png" alt="MARS" loading="lazy">
-              </div>
-              <div class="pub-content">
-                <p class="pub-title">MARS: Multi-task Action Prediction for Robot Manipulation based on Scene Representation</p>
-                <p class="pub-authors">
-                  Haoping Xu, Richard Hanxu*, <strong>AmirHossein Naghi Razlighi*</strong>,
-                  Alan Aspuru-Guzik, Florian Shkurti, Animesh Garg
-                </p>
-                <p class="pub-venue">Preprint, 2023</p>
-                <p class="pub-abstract">
-                  MARS uses Scene Representation Transformers to render novel views from RGB observations, then
-                  predicts end-effector poses and gripper states from language-conditioned keyframe demonstrations.
-                </p>
-                <div class="pub-links">
-                  <a href="https://drive.google.com/file/d/1iwb_fIVS-qDN-Yuk36_N90kwPsT0BQ0c/view?usp=sharing" target="_blank" rel="noopener">PDF</a>
-                </div>
-              </div>
-            </div>
-
-            <!-- Demo videos — remove this block if not needed -->
-            <div class="pub-videos">
-              <div class="video-card">
-                <div class="video-responsive">
-                  <iframe src="https://drive.google.com/file/d/1yStpz7G80C9o6FQSZRtEnb3uTlebOcAw/preview"
-                    allow="autoplay" allowfullscreen loading="lazy"></iframe>
-                </div>
-                <div class="video-label">Demo — Scene 1</div>
-              </div>
-              <div class="video-card">
-                <div class="video-responsive">
-                  <iframe src="https://drive.google.com/file/d/1RuYqlEcZZbp6dFv8hWG4hkVBQoawwqaw/preview"
-                    allow="autoplay" allowfullscreen loading="lazy"></iframe>
-                </div>
-                <div class="video-label">Demo — Scene 2</div>
-              </div>
-            </div>
-            <!-- end videos -->
-
-          </div>
-          <!-- ─────────────────────────────────────────────────────── -->
-
-        </div><!-- /pub-list -->
-      </section>
-
-
-      <!-- ══════════════════════════════════════════
-           RESEARCH EXPERIENCE
-
-           HOW TO ADD AN ENTRY:
-             1. Copy one .exp-entry block.
-             2. Fill in .exp-date, h3 (institution), .role, and the description paragraph.
-             3. Add a .btn-linkedin if there's a recommendation, otherwise omit it.
-
-           HOW TO REMOVE: delete the entire .exp-entry block.
-           ══════════════════════════════════════════ -->
-      <section id="research">
-        <h2 class="section-title">Research Experience</h2>
-        <div class="exp-list">
-
-          <!-- ── GrUVi Lab @ SFU ── -->
-          <div class="exp-entry">
-            <div class="exp-date">Jan 2026 - present</div>
-            <div class="exp-body">
-              <h3>GrUVi Lab @ Simon Fraser University</h3>
-              <p class="role">Research Assistant</p>
-              <p>
-                PhD student researcher, supervised by <a href="https://arash-mham.github.io/">Prof. Arash Mahdavi-Amiri</a> and
-                <a href="https://danielcohenor.com">Prof. Daniel Cohen-Or</a>.
-                Working on video generative models and 3D computer vision.
-              </p>
-            </div>
-          </div>
-
-          <!-- ── INSAIT ── -->
-          <div class="exp-entry">
-            <div class="exp-date">Jun – Oct 2024</div>
-            <div class="exp-body">
-              <h3>INSAIT</h3>
-              <p class="role">Summer Research Intern</p>
-              <p>
-                Supervised by <a href="https://insait.ai/dr-danda-paudel/">Dr. Danda Pani Paudel</a>.
-                Continued the ETH project: Dynamic 3D reconstruction using SDFs integrated into the
-                Gaussian Splatting pipeline. Created a dataset of challenging deformable scenes
-                (breaking sphere, growing plant, etc.) and designed a full reconstruction pipeline.
-              </p>
-              <a href="https://linkedin.com/in/amirhossein-razlighi" class="btn-linkedin"
-                 target="_blank" rel="noopener">
-                <i class="fab fa-linkedin"></i> LinkedIn Recommendation
-              </a>
-            </div>
-          </div>
-
-          <!-- ── ETH Zurich ── -->
-          <div class="exp-entry">
-            <div class="exp-date">Jun 2023 – Jul 2024</div>
-            <div class="exp-body">
-              <h3>ETH Zurich</h3>
-              <p class="role">Research Assistant</p>
-              <p>
-                Supervised by <a href="https://ellis.eu/person/danda-pani-paudel">Dr. Danda Pani Paudel</a>.
-                NeRF models for dynamic 3D reconstruction; studied SDFs to disentangle geometry and appearance.
-                Developed morphing between two SDFs from RGB images and SDF-based regularizers for inverse rendering.
-              </p>
-              <a href="https://linkedin.com/in/amirhossein-razlighi" class="btn-linkedin"
-                 target="_blank" rel="noopener">
-                <i class="fab fa-linkedin"></i> LinkedIn Recommendation
-              </a>
-            </div>
-          </div>
-
-          <!-- ── University of Toronto ── -->
-          <div class="exp-entry">
-            <div class="exp-date">Jun – May 2023</div>
-            <div class="exp-body">
-              <h3>University of Toronto</h3>
-              <p class="role">Research Assistant (Summer Internship)</p>
-              <p>
-                Supervised by <a href="https://www.cs.toronto.edu/~florian/">Dr. Florian Shkurti</a> and
-                <a href="https://animesh.garg.tech/">Dr. Animesh Garg</a>.
-                Vision-based robotic manipulation: NeRF-based scene encoding, customized SRT,
-                adapted the ARNOLD dataset for robot scenes, and worked on Google's PerAct model.
-                <a href="https://github.com/amirhossein-razlighi/arnold" target="_blank">Code</a>.
-              </p>
-            </div>
-          </div>
-
-        </div><!-- /exp-list -->
-      </section>
-
-
-      <!-- ══════════════════════════════════════════
-           INDUSTRY EXPERIENCE
-           Same template as Research — copy .exp-entry to add a role.
-           ══════════════════════════════════════════ -->
-      <section id="industry">
-        <h2 class="section-title">Industry Experience</h2>
-        <div class="exp-list">
-
-          <!-- ── CYENS Centre of Excellence ── -->
-          <div class="exp-entry">
-            <div class="exp-date">Jul 2026 – present</div>
-            <div class="exp-body">
-              <h3>CYENS Centre of Excellence</h3>
-              <p class="role">Research Scientist &nbsp;(Part-time) — Nicosia, Cyprus</p>
-              <p>
-                Working on machine learning and computer graphics research.
-              </p>
-            </div>
-          </div>
-
-          <!-- ── Tapsi – Data Scientist ── -->
-          <div class="exp-entry">
-            <div class="exp-date">Mar 2025 – Jan 2026</div>
-            <div class="exp-body">
-              <h3>Tapsi Co.</h3>
-              <p class="role">Data Scientist — MAP Team &nbsp;(ETA &amp; Navigation)</p>
-              <div class="promo-timeline">
-                <div class="promo-item">
-                  <div class="promo-meta">
-                    <span class="badge">Promoted</span> Jul 2025
-                  </div>
-                  <h4>Senior Expert Data Scientist</h4>
-                  <p>
-                    Led end-to-end R&amp;D → production delivery of two projects:
-                    GNN for spatio-temporal city modeling + ETA prediction; and an
-                    attention-based post-processing model for ETA enhancement.
-                    Improved key business metrics including ETA accuracy and map-coloring accuracy.
-                  </p>
-                </div>
-                <div class="promo-item">
-                  <div class="promo-meta">
-                    <span class="badge badge-gray">Started</span> Mar 2025
-                  </div>
-                  <h4>Expert Data Scientist</h4>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- ── Tapsi – AR Engineer ── -->
-          <div class="exp-entry">
-            <div class="exp-date">Feb – Sep 2022</div>
-            <div class="exp-body">
-              <h3>Tapsi Co.</h3>
-              <p class="role">Junior AR Systems Engineer &nbsp;(University CO-OP)</p>
-              <ul>
-                <li>First member of Tapsi Lab R&amp;D; used CV to improve ride-hailing UX.</li>
-                <li>Built the Driver-Arrived AR feature from scratch — driver position via camera + GPS.</li>
-                <li>Ran the complete AR pipeline client-side with TensorFlow.js and a custom AR.js fork.</li>
-                <li>Collaborated across design, business, and DevOps teams.</li>
-              </ul>
-            </div>
-          </div>
-
-        </div><!-- /exp-list -->
-      </section>
-
-
-      <!-- ══════════════════════════════════════════
-           EDUCATION
-           Same template as Research — copy .exp-entry to add a degree.
-           ══════════════════════════════════════════ -->
-      <section id="education">
-        <h2 class="section-title">Education</h2>
-        <div class="exp-list">
-
-          
-          <!-- EXAMPLE: uncomment to add a new degree -->
-          <div class="exp-entry">
-            <div class="exp-date">Jan 2026 - present</div>
-            <div class="exp-body">
-              <h3>University of Cyprus</h3>
-              <p class="role">PhD. Computer Science</p>
-              <p>
-                Co-supervised by <a href="https://www.cs.ucy.ac.cy/~yiorgos/">Prof. Yiorgos Chrysanthou</a>,
-                <a href="https://arash-mham.github.io/">Prof. Arash Mahdavi-Amiri</a> (SFU), and
-                <a href="https://danielcohenor.com">Prof. Daniel Cohen-Or</a>.
-              </p>
-            </div>
-          </div>
-         
-
-          <!-- ── Sharif University of Technology ── -->
-          <div class="exp-entry">
-            <div class="exp-date">2020 - 2025</div>
-            <div class="exp-body">
-              <h3>Sharif University of Technology</h3>
-              <p class="role">BSc. Computer Engineering</p>
-              <p class="edu-gpa">
-                Cumulative GPA: <strong>19.27 / 20</strong> &nbsp;·&nbsp;
-                Major GPA: <strong>19.65 / 20</strong> &nbsp;·&nbsp;
-                Ranked <strong>13<sup>th</sup> of 194</strong>
-              </p>
-            </div>
-          </div>
-
-          <!-- ── Salam High School ── -->
-          <div class="exp-entry">
-            <div class="exp-date">2016 – 2019</div>
-            <div class="exp-body">
-              <h3>Salam High School</h3>
-              <p class="role">Diploma, Mathematics &amp; Physics</p>
-              <p class="edu-gpa">GPA: <strong>19.86 / 20</strong></p>
-            </div>
-          </div>
-
-        </div><!-- /exp-list -->
-      </section>
-
-
-      <!-- ══════════════════════════════════════════
-           HONORS & AWARDS
-
-           HOW TO ADD: copy one .honor-entry block.
-           Icon options (Font Awesome): fa-trophy  fa-medal  fa-star  fa-award  fa-certificate
-           ══════════════════════════════════════════ -->
-      <section id="honors">
-        <h2 class="section-title">Honors &amp; Awards</h2>
-        <div class="honors-list">
-
-          <div class="honor-entry">
-            <i class="fas fa-trophy honor-icon"></i>
-            <div>
-              <h3>Top 0.1% — Iranian National University Entrance Exam (Konkur)</h3>
-              <p>Ranked <strong>99th</strong> among 100,000+ participants nationwide.</p>
-            </div>
-          </div>
-
-          <div class="honor-entry">
-            <i class="fas fa-medal honor-icon"></i>
-            <div>
-              <h3>Ranked 13th at Graduation — Sharif University of Technology</h3>
-              <p>Top 7% (13 of 194) in the BSc. Computer Engineering graduating class.</p>
-            </div>
-          </div>
-
-          <div class="honor-entry">
-            <i class="fas fa-star honor-icon"></i>
-            <div>
-              <h3>Special Graduate Entrance Scholarship — Simon Fraser University</h3>
-              <p>Awarded to a limited number of exceptional incoming graduate students each year.</p>
-            </div>
-          </div>
-
-        </div><!-- /honors-list -->
-      </section>
-
-
-      <!-- ══════════════════════════════════════════
-           PROJECTS
-
-           HOW TO ADD A PROJECT:
-             1. Copy one .project-item block.
-             2. Fill in:
-                  • .project-thumb img[src]  — thumbnail image path
-                  • h3                       — project name
-                  • p                        — short description
-                  • .tag-list .tag           — technology tags (copy <span class="tag">...</span>)
-                  • .project-links a         — GitHub / demo / paper links
-           HOW TO REMOVE: delete the entire .project-item block.
-           ══════════════════════════════════════════ -->
-      <section id="projects">
-        <h2 class="section-title">
-          Projects &nbsp;<a href="https://github.com/amirhossein-razlighi" target="_blank"
-            style="font-size:0.73rem; font-weight:400; color:var(--muted); text-transform:none; letter-spacing:0;">
-            → GitHub
-          </a>
-        </h2>
-        <div class="project-list">
-
-          <!-- ── Tiny NeRF ── -->
-          <div class="project-item">
-            <div class="project-thumb">
-              <img src="images/tiny_nerf.png" alt="Tiny NeRF" loading="lazy">
-            </div>
-            <div class="project-content">
-              <h3>Tiny NeRF</h3>
-              <p>PyTorch implementation of tiny NeRF — small enough to train on CPU in a reasonable time.</p>
-              <div class="tag-list">
-                <span class="tag">3D Vision</span>
-                <span class="tag">PyTorch</span>
-              </div>
-              <div class="project-links">
-                <a href="https://github.com/amirhossein-razlighi/Tiny_Nerf" target="_blank">GitHub</a>
-              </div>
-            </div>
-          </div>
-
-          <!-- ── Ray Tracing ── -->
-          <div class="project-item">
-            <div class="project-thumb">
-              <img src="images/ray_tracing.png" alt="Ray Tracing" loading="lazy">
-            </div>
-            <div class="project-content">
-              <h3>RayTracing from Scratch</h3>
-              <p>Basic ray tracing in Python using only NumPy and Matplotlib — no external renderer.</p>
-              <div class="tag-list">
-                <span class="tag">Graphics</span>
-              </div>
-              <div class="project-links">
-                <a href="https://github.com/amirhossein-razlighi/Ray_Tracing" target="_blank">GitHub</a>
-              </div>
-            </div>
-          </div>
-
-          <!-- ── Marching Squares ── -->
-          <div class="project-item">
-            <div class="project-thumb">
-              <img src="images/marching_squares.png" alt="Marching Squares" loading="lazy">
-            </div>
-            <div class="project-content">
-              <h3>Marching Squares</h3>
-              <p>2D terrain generation via the Marching Squares algorithm, with binary/float systems and noise generators.</p>
-              <div class="tag-list">
-                <span class="tag">Graphics</span>
-              </div>
-              <div class="project-links">
-                <a href="https://github.com/amirhossein-razlighi/Marching_Squares" target="_blank">GitHub</a>
-              </div>
-            </div>
-          </div>
-
-          <!-- ── Semantic Scholar Search Engine ── -->
-          <div class="project-item">
-            <div class="project-thumb">
-              <img src="images/search_engine.png" alt="Search Engine" loading="lazy">
-            </div>
-            <div class="project-content">
-              <h3>Semantic Scholar Search Engine</h3>
-              <p>Three-phase IR system: TF-IDF index + compression, ML ranking (Naive Bayes / LMs), Streamlit frontend.</p>
-              <div class="tag-list">
-                <span class="tag">Information Retrieval</span>
-                <span class="tag">Machine Learning</span>
-              </div>
-              <div class="project-links">
-                <a href="https://github.com/amirhossein-razlighi/IR_System_Semantic_Scholar" target="_blank">GitHub</a>
-              </div>
-            </div>
-          </div>
-
-          <!-- ── BlurSim ── -->
-          <div class="project-item">
-            <div class="project-thumb">
-              <img src="images/BlurSim.png" alt="BlurSim" loading="lazy">
-            </div>
-            <div class="project-content">
-              <h3>BlurSim</h3>
-              <p>A new perceptual loss function for accurately comparing differences between blurred images.</p>
-              <div class="tag-list">
-                <span class="tag">Image Processing</span>
-                <span class="tag">PyTorch</span>
-              </div>
-              <div class="project-links">
-                <a href="https://github.com/amirhossein-razlighi/BlurSim" target="_blank">GitHub</a>
-              </div>
-            </div>
-          </div>
-
-          <!-- ── CMinus Compiler ── -->
-          <div class="project-item">
-            <div class="project-thumb">
-              <img src="images/compiler.jpeg" alt="CMinus Compiler" loading="lazy">
-            </div>
-            <div class="project-content">
-              <h3>CMinus Compiler</h3>
-              <p>CMinus-to-Python compiler with four phases: scanner, parser, error analysis, and semantic analysis.</p>
-              <div class="tag-list">
-                <span class="tag">Compilers</span>
-              </div>
-              <div class="project-links">
-                <a href="https://github.com/amirhossein-razlighi/CMinus_Compiler" target="_blank">GitHub</a>
-              </div>
-            </div>
-          </div>
-
-        </div><!-- /project-list -->
-      </section>
-
-
-      <!-- ══════════════════════════════════════════
-           TEACHING & SERVICE
-
-           HOW TO ADD A COURSE:
-             Add a <p class="course-item"> line inside .course-list.
-             Format: <strong>Course Name</strong> — description. <span class="instr">Prof. Name</span>
-
-           HOW TO ADD A NEW BLOCK (e.g. a different university):
-             Copy the entire .teaching-block div and update h3 and the course list.
-           ══════════════════════════════════════════ -->
-      <section id="teaching">
-        <h2 class="section-title">Teaching &amp; Service</h2>
-
-        <!-- ── Teaching Assistant ── -->
-        <div class="teaching-block">
-          <h3>Teaching Assistant — Sharif University of Technology</h3>
-          <p class="meta">Oct 2021 – Jul 2025 &nbsp;·&nbsp; All positions voluntary / unpaid</p>
-          <div class="course-list">
-            <p class="course-item"><strong>Adv. 3D Computer Vision (Grad.)</strong> — Quizzes on multi-view reconstruction; lectures on NeRF &amp; Gaussian Splatting. <span class="instr">Prof. Shohreh Kasaei</span></p>
-            <p class="course-item"><strong>Modern Information Retrieval (Head of Project)</strong> — Led 3-phase final project: classical IR, ML in IR, deep methods + LLMs. <span class="instr">Dr. Mahdieh Soleymani</span></p>
-            <p class="course-item"><strong>Machine Learning (Head TA, Projects)</strong> — Managed team of 10; CV &amp; NLP final projects. <span class="instr">Dr. Fatemeh Seyed Salehi</span></p>
-            <p class="course-item"><strong>Convex Optimization</strong> — <span class="instr">Dr. Amir Najafi</span></p>
-            <p class="course-item"><strong>Digital Image Processing (Grad.)</strong> — Deep learning lectures &amp; quizzes. <span class="instr">Prof. Shohreh Kasaei</span></p>
-            <p class="course-item"><strong>Scientific &amp; Technical Presentation (Head TA)</strong> — <span class="instr">Prof. Shohreh Kasaei</span></p>
-            <p class="course-item"><strong>Artificial Intelligence</strong> — CV project designer. <span class="instr">Dr. M. H. Rohban</span></p>
-            <p class="course-item"><strong>Artificial Intelligence</strong> — Head of final project design. <span class="instr">Dr. M. H. Rohban, Dr. M. Soleymani</span></p>
-            <p class="course-item"><strong>Fundamentals of Computer Vision (Head of Workshops)</strong> — 3D Vision exercises. <span class="instr">Prof. Shohreh Kasaei</span></p>
-            <p class="course-item"><strong>Database Design</strong> — <span class="instr">Dr. M. Varmazyar</span></p>
-            <p class="course-item"><strong>Linear Algebra (2 semesters)</strong> — Redesigned all slides; theoretical exercise design. <span class="instr">Dr. Maryam Ramezani</span></p>
-            <p class="course-item"><strong>Probability &amp; Statistics</strong> — <span class="instr">Dr. Mahdi Jafari</span></p>
-            <p class="course-item"><strong>Advanced Programming in Java (3 semesters)</strong> — 3 OOP workshops; designed GUI project phase.</p>
-          </div>
-        </div>
-
-        <!-- ── Volunteering ── -->
-        <div class="teaching-block">
-          <h3>Volunteering &amp; Service</h3>
-          <div class="course-list">
-            <p class="course-item"><strong>Vice President, Students' Scientific Chapter (SSC)</strong></p>
-            <p class="course-item"><strong>Head of Technical Beta Team (8th WSS)</strong> — Built an R&amp;D FAQ chatbot for the conference. <a href="https://github.com/Winter-Seminar-Series" target="_blank">GitHub</a></p>
-            <p class="course-item"><strong>Founder, Byte Publication</strong> — <a href="https://www.linkedin.com/company/byte-publication/?viewAsMember=true" target="_blank">LinkedIn</a></p>
-            <p class="course-item"><strong>RTI Program — Oxford University</strong></p>
-            <p class="course-item"><strong>3D Vision Reading Group — University of Toronto</strong></p>
-          </div>
-        </div>
-
-      </section>
-
-
-      <!-- ══════════════════════════════════════════
-           OUTSIDE RESEARCH / HOBBIES
-           Edit the text and add/remove hobby links as needed.
-           ══════════════════════════════════════════ -->
-      <section id="hobbies">
-        <h2 class="section-title">Outside Research</h2>
-        <p class="hobbies-text">
-          When I'm not doing research, I enjoy playing video games and reading science fiction novels.
-        </p>
-        <div class="hobby-links">
-          <a href="https://steamcommunity.com/profiles/76561198768481543/" target="_blank" rel="noopener">
-            <i class="fab fa-steam"></i> Steam
-          </a>
-          <a href="https://profile.playstation.com/amirh_nr" target="_blank" rel="noopener">
-            <i class="fab fa-playstation"></i> PlayStation
-          </a>
-          <a href="https://www.goodreads.com/user/show/71204889" target="_blank" rel="noopener">
-            <i class="fas fa-book"></i> Goodreads
-          </a>
-        </div>
-      </section>
-
-    </div><!-- /wrap -->
-  </main>
-
-  <footer>
-    <p>
-      © 2025 AmirHossein Razlighi &nbsp;·&nbsp;
-      Design inspired by <a href="http://jonbarron.info" target="_blank" rel="noopener">Jon Barron</a>
-    </p>
-  </footer>
-
+    <div>
+      <h3>Industry</h3>
+      <ul class="tl">
+        <li><span class="d">Mar 2025 – Jan 2026</span><b>Tapsi</b><span class="r">Data Scientist, promoted to Senior Expert Data Scientist (Jul 2025)</span><p>Led two projects from research to production on the MAP team: a GNN for spatio-temporal city modelling and ETA prediction, and an attention-based ETA post-processing model.</p></li>
+        <li><span class="d">Feb – Sep 2022</span><b>Tapsi Lab</b><span class="r">Junior AR Systems Engineer (co-op)</span><p>First member of Tapsi Lab R&amp;D. Built the Driver-Arrived AR feature, running the full pipeline client-side with TensorFlow.js.</p></li>
+      </ul>
+      <h3 style="margin-top:12px">Education</h3>
+      <ul class="tl">
+        <li><span class="d">Jan 2026 – present</span><b>University of Cyprus</b><span class="r">PhD, Computer Science</span></li>
+        <li><span class="d">2020 – 2025</span><b>Sharif University of Technology</b><span class="r">BSc, Computer Engineering · GPA 19.27 / 20, ranked 13th of 194</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <h3 style="margin:18px 0 6px;font-size:1.3rem">Honors</h3>
+  <ul class="honors">
+    <li><b>Special Graduate Entrance Scholarship</b>, Simon Fraser University</li>
+    <li><b>Ranked 13th</b> of 194 at graduation, Sharif University of Technology</li>
+    <li><b>Top 0.1%</b> in the Iranian national university entrance exam (rank 99 of 100,000+)</li>
+  </ul>
+</section>
+
+<section id="projects">
+  <h2>Earlier projects</h2>
+  <p class="sub">Implementations from scratch, mostly for learning.</p>
+  <div class="grid">
+    <div class="proj"><img src="images/tiny_nerf.png" alt="" loading="lazy"><div><b>Tiny NeRF</b><p>A tiny NeRF in PyTorch, small enough to train on a CPU.</p><a href="https://github.com/amirhossein-razlighi/Tiny_Nerf">GitHub</a></div></div>
+    <div class="proj"><img src="images/ray_tracing.png" alt="" loading="lazy"><div><b>Ray tracing from scratch</b><p>Basic ray tracing with only NumPy and Matplotlib.</p><a href="https://github.com/amirhossein-razlighi/Ray_Tracing">GitHub</a></div></div>
+    <div class="proj"><img src="images/BlurSim.png" alt="" loading="lazy"><div><b>BlurSim</b><p>A perceptual loss for comparing blurred images.</p><a href="https://github.com/amirhossein-razlighi/BlurSim">GitHub</a></div></div>
+    <div class="proj"><img src="images/marching_squares.png" alt="" loading="lazy"><div><b>Marching squares</b><p>2D terrain generation with noise generators.</p><a href="https://github.com/amirhossein-razlighi/Marching_Squares">GitHub</a></div></div>
+    <div class="proj"><img src="images/search_engine.png" alt="" loading="lazy"><div><b>Semantic Scholar search</b><p>TF-IDF index, ML ranking and a Streamlit frontend.</p><a href="https://github.com/amirhossein-razlighi/IR_System_Semantic_Scholar">GitHub</a></div></div>
+    <div class="proj"><img src="images/compiler.jpeg" alt="" loading="lazy"><div><b>CMinus compiler</b><p>Scanner, parser and semantic analysis, compiling to Python.</p><a href="https://github.com/amirhossein-razlighi/CMinus_Compiler">GitHub</a></div></div>
+  </div>
+</section>
+
+<section id="teaching">
+  <h2>Teaching and service</h2>
+  <p class="sub">Teaching assistant at Sharif University of Technology, Oct 2021 – Jul 2025.</p>
+  <details>
+    <summary>Courses (13)</summary>
+    <ul>
+      <li>Advanced 3D Computer Vision (grad.): lectures on NeRF and Gaussian Splatting. Prof. Shohreh Kasaei</li>
+      <li>Modern Information Retrieval: head of project. Dr. Mahdieh Soleymani</li>
+      <li>Machine Learning: head TA for projects, managing a team of 10. Dr. Fatemeh Seyed Salehi</li>
+      <li>Digital Image Processing (grad.), Fundamentals of Computer Vision, Scientific and Technical Presentation. Prof. Shohreh Kasaei</li>
+      <li>Artificial Intelligence (two terms): project design. Dr. M. H. Rohban</li>
+      <li>Convex Optimization, Database Design, Linear Algebra, Probability and Statistics, Advanced Programming in Java</li>
+    </ul>
+  </details>
+  <p class="sub" style="margin:18px 0 0">Service: Vice President of the Students' Scientific Chapter (SSC) · Head of the Technical Beta Team, Winter Seminar Series · Founder, Byte Publication · RTI Program, Oxford · 3D Vision Reading Group, University of Toronto.</p>
+</section>
+
+<section id="contact" class="contact">
+  <h2>Contact</h2>
+  <p>Email is the best way to reach me. I am glad to talk about video generation, 3D vision or collaborations. Outside research I play video games and read science fiction (<a href="https://steamcommunity.com/profiles/76561198768481543/">Steam</a>, <a href="https://www.goodreads.com/user/show/71204889">Goodreads</a>).</p>
+  <div class="btns">
+    <a class="btn primary" href="mailto:arazlighi@gmail.com">arazlighi@gmail.com</a>
+    <a class="btn" href="mailto:amirhossein_naghi_razlighi@sfu.ca">SFU</a>
+    <a class="btn" href="mailto:naghirazlighi.amirhossein@ucy.ac.cy">UCY</a>
+  </div>
+</section>
+</main>
+<footer>© 2026 AmirHossein Razlighi</footer>
+
+<script>
+(function(){
+  var cv=document.getElementById('flow'),ctx=cv.getContext('2d');
+  var slider=document.getElementById('t'),tval=document.getElementById('tval'),poke=document.getElementById('poke');
+  var N=1800,W=cv.width,H=cv.height;
+  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var eps=[],tgt=[],hue=[];
+  function gauss(){var u=1-Math.random(),v=Math.random();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v)}
+  // data distributions x1 to flow into; each returns N points plus a hue (colour) per point
+  function pixels(draw){
+    var c=document.createElement('canvas');c.width=c.height=240;
+    var g=c.getContext('2d');g.fillStyle='#000';draw(g);
+    var d=g.getImageData(0,0,240,240).data,px=[];
+    for(var i=3;i<d.length;i+=4) if(d[i]>128){var q=(i-3)/4;px.push([q%240,Math.floor(q/240)])}
+    return px;
+  }
+  function raster(draw,detail,share){ // sample points from a filled 2D shape; `detail` is an optional layer given `share` of the points
+    var px=pixels(draw), px2=detail?pixels(detail):null, out=[],hs=[];
+    for(var k=0;k<N;k++){
+      var src=(px2&&Math.random()<share)?px2:px;
+      var p=src[Math.floor(Math.random()*src.length)];
+      var x=(p[0]/240-.5)*1.7, y=(p[1]/240-.5)*1.7;
+      out.push([x,y,gauss()*.03]); hs.push(clamp01(x/1.4+.5));
+    }
+    return {pts:out,hue:hs,flat:true};
+  }
+  var shapes=[
+    {name:'AR',make:function(){return raster(function(g){
+      g.font='bold 150px Georgia, "Times New Roman", serif';g.textAlign='center';g.textBaseline='middle';
+      g.fillText('AR',120,128);
+    })}},
+    {name:'scene',make:function(){ // a (2,3) torus knot standing in for a 3D scene
+      var o=[],h=[];
+      for(var i=0;i<N;i++){
+        var s=Math.random()*Math.PI*2, r=0.55+0.22*Math.cos(3*s), j=Math.random()*Math.PI*2, tube=0.1;
+        var cx=r*Math.cos(2*s), cy=r*Math.sin(2*s), cz=0.28*Math.sin(3*s);
+        o.push([cx+tube*Math.cos(j)*Math.cos(2*s), cy+tube*Math.cos(j)*Math.sin(2*s), cz+tube*Math.sin(j)]);
+        h.push(s/(Math.PI*2));
+      }
+      return {pts:o,hue:h,flat:false};
+    }},
+    {name:'video',make:function(){return raster(function(g){ // play button inside a ring
+      g.lineWidth=14;g.strokeStyle='#000';g.beginPath();g.arc(120,120,100,0,Math.PI*2);g.stroke();
+      g.beginPath();g.moveTo(94,66);g.lineTo(94,174);g.lineTo(176,120);g.closePath();g.fill();
+    })}},
+    {name:'sound',make:function(){return raster(function(g){ // waveform bars
+      g.lineCap='round';g.lineWidth=5;g.strokeStyle='#000';
+      var n=20;
+      for(var i=0;i<n;i++){
+        var u=i/(n-1), x=8+u*224, env=Math.pow(Math.sin(Math.PI*(u*.92+.04)),.55),
+            m=.45+.55*Math.abs(Math.sin(i*.62+.5)*Math.cos(i*.19+1)), h=10+196*env*m;
+        g.beginPath();g.moveTo(x,120-h/2);g.lineTo(x,120+h/2);g.stroke();
+      }
+    })}},
+    {name:'sandwich',make:function(){return raster(function(g){ // bun, lettuce, patty, bun
+      function rr(x,y,w,h,r){g.beginPath();g.moveTo(x+r,y);g.arcTo(x+w,y,x+w,y+h,r);g.arcTo(x+w,y+h,x,y+h,r);g.arcTo(x,y+h,x,y,r);g.arcTo(x,y,x+w,y,r);g.closePath();g.fill()}
+      g.beginPath();g.ellipse(120,98,92,58,0,Math.PI,0);g.closePath();g.fill(); // top bun
+      g.globalCompositeOperation='destination-out'; // sesame seeds
+      [[90,62],[120,50],[150,62],[105,78],[137,80],[76,86],[164,86]].forEach(function(q){
+        g.beginPath();g.ellipse(q[0],q[1],6,3.4,.4,0,Math.PI*2);g.fill()});
+      g.globalCompositeOperation='source-over';
+      g.lineWidth=11;g.lineCap='round';g.strokeStyle='#000';g.beginPath(); // lettuce
+      for(var x=26;x<=214;x+=4){var y=114+4*Math.sin(x/8);x===26?g.moveTo(x,y):g.lineTo(x,y)}
+      g.stroke();
+      rr(28,130,184,26,13); // patty
+      rr(28,164,184,30,15); // bottom bun
+    })}},
+    {name:'maze',make:function(){return raster(function(g){
+      var n=8,c=26,o=16,seen=[],walls=[]; // random maze by depth-first search
+      for(var i=0;i<n*n;i++){seen.push(false);walls.push([true,true,true,true])} // up,right,down,left
+      var stack=[0];seen[0]=true;
+      while(stack.length){
+        var cell=stack[stack.length-1],cx=cell%n,cy=Math.floor(cell/n),opts=[];
+        if(cy>0&&!seen[cell-n])opts.push(0);if(cx<n-1&&!seen[cell+1])opts.push(1);
+        if(cy<n-1&&!seen[cell+n])opts.push(2);if(cx>0&&!seen[cell-1])opts.push(3);
+        if(!opts.length){stack.pop();continue}
+        var d=opts[Math.floor(Math.random()*opts.length)],nx=cell+[-n,1,n,-1][d];
+        walls[cell][d]=false;walls[nx][(d+2)%4]=false;seen[nx]=true;stack.push(nx);
+      }
+      g.lineWidth=6;g.lineCap='square';g.strokeStyle='#000';g.beginPath();
+      for(var k=0;k<n*n;k++){
+        var x=o+(k%n)*c,y=o+Math.floor(k/n)*c,w=walls[k];
+        if(w[0]){g.moveTo(x,y);g.lineTo(x+c,y)}
+        if(w[1]){g.moveTo(x+c,y);g.lineTo(x+c,y+c)}
+        if(w[2]){g.moveTo(x,y+c);g.lineTo(x+c,y+c)}
+        if(w[3]){g.moveTo(x,y);g.lineTo(x,y+c)}
+      }
+      g.stroke();
+    })}},
+    {name:'sudoku',make:function(){
+      var c=24,o=12;
+      return raster(function(g){
+        g.strokeStyle='#000';
+        for(var i=0;i<=9;i++){
+          g.lineWidth=i%3===0?8:3.5;
+          g.beginPath();g.moveTo(o+i*c,o);g.lineTo(o+i*c,o+9*c);g.stroke();
+          g.beginPath();g.moveTo(o,o+i*c);g.lineTo(o+9*c,o+i*c);g.stroke();
+        }
+      },function(g){
+        g.fillStyle='#000';g.font='bold 21px Georgia, serif';g.textAlign='center';g.textBaseline='middle';
+        for(var k=0;k<20;k++){
+          g.fillText(String(1+Math.floor(Math.random()*9)),o+(Math.floor(Math.random()*9)+.5)*c,o+(Math.floor(Math.random()*9)+.55)*c);
+        }
+      },.35);
+    }},
+    {name:'lips',make:function(){return raster(function(g){ // for lip reading
+      g.beginPath();g.moveTo(26,120);g.bezierCurveTo(62,88,98,86,120,102);g.bezierCurveTo(142,86,178,88,214,120);
+      g.bezierCurveTo(180,126,150,124,120,126);g.bezierCurveTo(90,124,60,126,26,120);g.closePath();g.fill();
+      g.beginPath();g.moveTo(32,127);g.bezierCurveTo(62,131,90,129,120,131);g.bezierCurveTo(150,129,178,131,208,127);
+      g.bezierCurveTo(190,158,152,168,120,168);g.bezierCurveTo(88,168,50,158,32,127);g.closePath();g.fill();
+    })}},
+    {name:'mesh',make:function(){ // surface of a cube, as a stand-in for a mesh
+      var o=[],h=[];
+      for(var i=0;i<N;i++){
+        var v=[Math.random()*2-1,Math.random()*2-1,Math.random()*2-1], f=Math.floor(Math.random()*3);
+        v[f]=Math.random()<.5?-1:1;
+        o.push([v[0]*.5,v[1]*.5,v[2]*.5]); h.push((v[0]+v[1]+2)/4);
+      }
+      return {pts:o,hue:h,flat:false};
+    }}
+  ];
+  var cur=0,flat=false,shapeEl=document.getElementById('shape');
+  function setShape(i){
+    cur=i; var m=shapes[i].make(); tgt=m.pts; hue=m.hue; flat=m.flat;
+    shapeEl.textContent=shapes[i].name;
+  }
+  function clamp01(x){return x<0?0:x>1?1:x}
+  function resample(){eps=[];for(var i=0;i<N;i++)eps.push([gauss()*.8,gauss()*.8,gauss()*.8])}
+  resample(); setShape(0);
+  var t=0, auto=!reduce, ang=0, last=null, t0=null;
+  function ease(x){return x*x*(3-2*x)}
+  function lerp(a,b,x){return a+(b-a)*x}
+  function col(h,k){ // purple -> warm
+    var r=lerp(47,91,h),g=lerp(95,182,h),b=lerp(208,232,h);
+    return 'rgba('+(r|0)+','+(g|0)+','+(b|0)+','+k+')'
+  }
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    var va=flat?0.3*Math.sin(ang*1.1):ang, e=ease(t), ca=Math.cos(va), sa=Math.sin(va), sc=Math.min(W,H)*0.42;
+    var pts=[];
+    for(var i=0;i<N;i++){
+      var x=lerp(eps[i][0],tgt[i][0],e), y=lerp(eps[i][1],tgt[i][1],e), z=lerp(eps[i][2],tgt[i][2],e);
+      var rx=x*ca+z*sa, rz=-x*sa+z*ca, f=2.6/(2.6+Math.max(rz,-1.8)); // keep points in front of the camera
+      pts.push([W/2+rx*sc*f, H/2+y*sc*f, rz, f, i]);
+    }
+    pts.sort(function(a,b){return b[2]-a[2]});
+    for(var k=0;k<N;k++){
+      var p=pts[k], rad=Math.max(.5,lerp(7,3.4,e)*p[3]);
+      var g=ctx.createRadialGradient(p[0],p[1],0,p[0],p[1],rad);
+      var a=lerp(.28,.7,e);
+      g.addColorStop(0,col(hue[p[4]],a)); g.addColorStop(1,col(hue[p[4]],0));
+      ctx.fillStyle=g; ctx.fillRect(p[0]-rad,p[1]-rad,rad*2,rad*2);
+    }
+  }
+  // time comes only from the rAF timestamp; t0 === null means "latch on next frame"
+  var running=false;
+  function frame(ts){
+    if(last===null) last=ts;
+    var dt=Math.min(.1,Math.max(0,(ts-last)/1000)); last=ts;
+    if(!reduce) ang+=dt*0.35;
+    if(auto){
+      if(t0===null) t0=ts;
+      t=clamp01((ts-t0)/3200); slider.value=t;
+      if(t>=1) auto=false;
+    }
+    tval.textContent='t = '+t.toFixed(2);
+    try{draw()}catch(err){console.error(err)}
+    if(!reduce||auto) requestAnimationFrame(frame); else running=false;
+  }
+  function start(){
+    if(running) return;
+    running=true; last=null;
+    requestAnimationFrame(frame);
+  }
+  slider.addEventListener('input',function(){auto=false;t=+slider.value;tval.textContent='t = '+t.toFixed(2);draw()});
+  // user-initiated, so it plays even with reduced motion
+  // user-initiated, so it plays even with reduced motion
+  function go(i){
+    setShape(i);resample();t=0;slider.value=0;auto=true;t0=null;
+    tval.textContent='t = 0.00'; draw(); start();
+  }
+  poke.addEventListener('click',function(){go((cur+1)%shapes.length)}); // ordered shuffle
+  if(reduce){t=1;slider.value=1;draw()}
+  else{auto=true;t0=null;start()}
+})();
+</script>
 </body>
 </html>
